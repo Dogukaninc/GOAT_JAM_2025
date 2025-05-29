@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     public NavMeshAgent NavMeshAgent { get; set; }
+    public Transform target;
 
     private void Awake()
     {
@@ -13,15 +14,10 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            NavMeshAgent.SetDestination(Input.mousePosition);
-        }
-        
+        NavMeshAgent.SetDestination(target.position);
     }
 }
