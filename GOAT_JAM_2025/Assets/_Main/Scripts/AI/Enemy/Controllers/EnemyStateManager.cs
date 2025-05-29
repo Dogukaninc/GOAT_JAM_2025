@@ -1,3 +1,4 @@
+using System;
 using Scripts.AI.Base;
 using Scripts.AI.Enemy.States;
 using TMPro;
@@ -24,8 +25,9 @@ namespace Assets._Scripts.Enemy
         {
             _stateMachine = new StateMachine();
             var idleState = new Idle();
+            var moveToTargetState = new MoveToTargetState();
 
-            // Func<bool> isPlayerAlive = () => IsPlayerAlive() && !IsCloseToPlayer();
+            // Func<bool> isPlayerAlive = () => IsPlayerAlive();
 
             // _stateMachine.AddAnyTransition(moveState, isPlayerAlive);
 
@@ -38,5 +40,7 @@ namespace Assets._Scripts.Enemy
 
             stateDebugText.SetText(_stateMachine.CurrentState.GetType().Name);
         }
+        
+        // private void IsPlayerAlive()=>GeneralValuesHolder.Instance.Player.
     }
 }

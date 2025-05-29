@@ -1,8 +1,11 @@
+using _Main.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour,IDieable
 {
+    public bool IsDead { get; set; }
+
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private float gravity = -9.81f;
@@ -95,5 +98,13 @@ public class Player : MonoBehaviour
         }
         if (shootAction != null)
             shootAction.performed -= OnShootActionPerformed;
+    }
+
+    public void OnDead()
+    {
+    }
+
+    public void OnRevive()
+    {
     }
 }

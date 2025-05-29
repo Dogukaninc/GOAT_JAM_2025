@@ -5,7 +5,13 @@ namespace Scripts.AI.Enemy.States
     public class Idle : IState
     {
         /// <summary>
-        /// 
+        /// Idle da duracak
+        /// Eğer ReadyToAttack olarak bool dönerse generalValues'dan player'ı kontrol edecek
+        /// Player hayattaysa ona doğru hareket edecek
+        /// Trigger alanı olacak (Overlap Sphere)
+        /// Eğer player bu alandaysa ona zarar verecek
+        /// Hasar so'su olacak
+        /// Stopping distance so'dan gelecek ve player'a bu kadar hasar verecek
         /// </summary>
         
         public Idle()
