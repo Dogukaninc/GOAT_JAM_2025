@@ -4,6 +4,10 @@ namespace Scripts.AI.Enemy.States
 {
     public class Idle : IState
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        
         public Idle()
         {
             

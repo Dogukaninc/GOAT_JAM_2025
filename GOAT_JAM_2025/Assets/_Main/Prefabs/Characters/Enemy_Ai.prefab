@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 2690063213046899526}
   - component: {fileID: 5218947960769774283}
   - component: {fileID: 3019033881772436944}
+  - component: {fileID: 4475309764426439368}
   - component: {fileID: 4920321014700857212}
   m_Layer: 0
   m_Name: Enemy_Ai
@@ -428,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc0afdcd19e2f2408d7a798d9ba55dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!114 &3019033881772436944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +443,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateDebugText: {fileID: 3155474050018513138}
+--- !u!114 &4475309764426439368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104995453650656520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd460f72a63a79244b41677715e26d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInDefense: 0
+  <HealthText>k__BackingField: {fileID: 0}
+  <HealthSlider>k__BackingField: {fileID: 0}
+  <CurrentHealth>k__BackingField: 0
+  <MaxHealth>k__BackingField: 100
 --- !u!195 &4920321014700857212
 NavMeshAgent:
   m_ObjectHideFlags: 0
