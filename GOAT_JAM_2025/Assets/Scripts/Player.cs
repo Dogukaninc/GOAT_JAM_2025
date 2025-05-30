@@ -79,18 +79,16 @@ public class Player : MonoBehaviour, IDieable
 
     private void OnLanternActionPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log("Lantern action performed");
         isLanternButtonHeld = !isLanternButtonHeld;
+        lantern.GetComponent<Lantern>().OnLanternOn();
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
-        lantern.GetComponent<Animator>().SetBool("IsLanternOn", isLanternButtonHeld);       
     }
 
 
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log("Shoot action performed");
         animator.SetTrigger("Shoot");
-        magic.GetComponent<Animator>().SetTrigger("Shoot");
+        //magic.GetComponent<Animator>().SetTrigger("Shoot");
     }
 
     void OnDestroy()
