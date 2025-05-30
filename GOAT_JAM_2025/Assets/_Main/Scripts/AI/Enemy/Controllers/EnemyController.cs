@@ -1,35 +1,31 @@
-using System;
 using _Main.Scripts.Interface;
+using _Main.Scripts.ScriptableClasses;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour,IDieable
+public class EnemyController : MonoBehaviour, IDieable
 {
+    [field: SerializeField] public EnemySo EnemySo { get; private set; }
+    [field: SerializeField] public bool IsDead { get; set; }
+    public float StoppingDistance { get; private set; }
     public NavMeshAgent NavMeshAgent { get; set; }
-    public Transform target;
+    public bool isReadyToMove; //TODO-> Bu flag sadece ai'ı başlangıçta koşullandırmak için kullanılan bir debug.
 
     private void Awake()
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();
     }
 
-    void Start()
+    private void Start()
     {
+        StoppingDistance = EnemySo.stoppingDistance;
     }
 
-    void Update()
-    {
-        NavMeshAgent.SetDestination(target.position);
-    }
-
-    public bool IsDead { get; set; }
     public void OnDead()
     {
-        throw new NotImplementedException();
     }
 
     public void OnRevive()
     {
-        throw new NotImplementedException();
     }
 }

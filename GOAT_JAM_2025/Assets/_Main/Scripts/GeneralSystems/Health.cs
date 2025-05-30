@@ -25,13 +25,13 @@ namespace Scripts.GeneralSystems
             UpdateHealthUI();
         }
 
-        public void TakeDamage(float damage, Transform damageTextTransform, bool isRandomizePos = false, bool isCrit = false, Action onDeadAction = null)
+        public void TakeDamage(float damage, Transform damageTextTransform = null, bool isRandomizePos = false, bool isCrit = false, Action onDeadAction = null)
         {
             if (isInDefense)
             {
                 return;
             }
-            
+
             if (CurrentHealth - damage <= 0)
             {
                 var roundedHealth = (float)Math.Round(CurrentHealth, 2);

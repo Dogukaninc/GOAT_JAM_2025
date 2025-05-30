@@ -2,9 +2,9 @@ using _Main.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour,IDieable
+public class Player : MonoBehaviour, IDieable
 {
-    public bool IsDead { get; set; }
+    [field: SerializeField] public bool IsDead { get; set; }
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -14,7 +14,7 @@ public class Player : MonoBehaviour,IDieable
 
     private float verticalVelocity;
     private float turnSmoothVelocity;
-    
+
     private Animator animator;
     private CharacterController controller;
     private Vector3 movement;
@@ -25,7 +25,7 @@ public class Player : MonoBehaviour,IDieable
     private InputAction lanternAction;
     private bool isLanternOn;
     private bool isLanternButtonHeld;
-        
+
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour,IDieable
     {
         cameraTransform = Camera.main.transform;
     }
-    
+
     void Update()
     {
         Vector2 input = moveAction.ReadValue<Vector2>();
@@ -63,7 +63,7 @@ public class Player : MonoBehaviour,IDieable
         {
             float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            
+
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
@@ -86,7 +86,6 @@ public class Player : MonoBehaviour,IDieable
     }
 
 
-
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
         Debug.Log("Shoot action performed");
@@ -101,6 +100,7 @@ public class Player : MonoBehaviour,IDieable
             lanternAction.started -= OnLanternActionPerformed;
             lanternAction.canceled -= OnLanternActionPerformed;
         }
+
         if (shootAction != null)
             shootAction.performed -= OnShootActionPerformed;
     }
