@@ -10,33 +10,38 @@ namespace _Main.Scripts.AI.Enemy.Controllers
         private int _getHitClipName = Animator.StringToHash("GetHit");
 
         public Animator animator;
+        
+        private static readonly int VelocityZ = Animator.StringToHash("VelocityZ");
+        private static readonly int VelocityX = Animator.StringToHash("VelocityX");
 
-        private void Start()
+        public void AnimateMovement(Vector3 movement)
         {
-            PlayIdleClip();
-        }
+            Vector3 localMovement = transform.InverseTransformDirection(movement);
 
+            float velocityZ = localMovement.z;
+            float velocityX = localMovement.x;
+
+            animator.SetFloat(VelocityZ, velocityZ, 0.1f, Time.deltaTime);
+            animator.SetFloat(VelocityX, velocityX, 0.1f, Time.deltaTime);
+        }
+    
         public void PlayIdleClip()
         {
-            // animator.CrossFade(_idleClipName, 0.1f);
-            animator.SetBool("isRunning", false);
+           
         }
 
         public void PlayRunClip()
         {
-            // animator.CrossFade(_runClipName, 0.1f);
-            animator.SetBool("isRunning", true);
+           
         }
 
         public void PlayGetHitClip()
         {
-            animator.CrossFade(_getHitClipName, 0.1f);
         }
 
         public void PlayAttackClip()
         {
-            animator.SetBool("isRunning", false);
-            animator.SetTrigger(_attackClipName);
+            
         }
     }
 }

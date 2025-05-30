@@ -1,3 +1,4 @@
+using _Main.Scripts.AI.Enemy.Controllers;
 using _Main.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour, IDieable
     [SerializeField] private GameObject magic;
     [SerializeField] private GameObject bullet;
 
+    private PlayerAnimationHandler _playerAnimationHandler;
     private float verticalVelocity;
     private float turnSmoothVelocity;
     private float lanternRadius = 10f;
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour, IDieable
 
     void Awake()
     {
+        _playerAnimationHandler = GetComponent<PlayerAnimationHandler>();
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
@@ -98,6 +101,7 @@ public class Player : MonoBehaviour, IDieable
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f);
             controller.Move((moveDir.normalized * moveSpeed + verticalMove) * Time.deltaTime);
+            _playerAnimationHandler.AnimateMovement(moveDir);
         }
         else
         {
