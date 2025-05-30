@@ -1,5 +1,5 @@
+using _Main.Scripts.Interface;
 using UnityEngine;
-
 using Scripts.GeneralSystems;
 
 public class Bullet : MonoBehaviour
@@ -8,19 +8,20 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifespan = 4f;
 
-    public void Thrown(){
+    public void Thrown()
+    {
         GetComponent<Rigidbody>().AddForce(transform.up * speed, ForceMode.Impulse);
-        Destroy(gameObject,lifespan);
+        Destroy(gameObject, lifespan);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<EnemyCleanse>().isDamagable)
         {
-            other.gameObject.GetComponent<Health>().TakeDamage(damage);
+            var iDieable = other.gameObject.GetComponent<IDieable>();
+            other.gameObject.GetComponent<Health>().TakeDamage(damage, null, false, false, iDieable.OnDead);
             Debug.Log("Bullet hit enemy");
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
-
 }

@@ -27,6 +27,7 @@ public class EnemyController : MonoBehaviour, IDieable
 
     public void OnDead()
     {
+        gameObject.SetActive(false);
     }
 
     public void OnRevive()
