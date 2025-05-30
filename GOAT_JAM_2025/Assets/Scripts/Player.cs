@@ -4,17 +4,23 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IDieable
 {
+    public BulletPool bulletPool{get; private set;}
     [field: SerializeField] public bool IsDead { get; set; }
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float bulletSpeed = 10f;
+
     [SerializeField] private GameObject lantern;
     [SerializeField] private GameObject magic;
+    [SerializeField] private GameObject bullet;
 
     private float verticalVelocity;
     private float turnSmoothVelocity;
-
+    private float lanternRadius = 10f;
+    private Queue<GameObject> bullets = new Queue<GameObject>();
+    private Camera mainCamera;
     private Animator animator;
     private CharacterController controller;
     private Vector3 movement;
@@ -28,6 +34,8 @@ public class Player : MonoBehaviour, IDieable
 
     void Awake()
     {
+        bulletPool = new BulletPool();
+        bulletPool.InitializePool();
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
@@ -41,7 +49,9 @@ public class Player : MonoBehaviour, IDieable
 
     void Start()
     {
-        cameraTransform = Camera.main.transform;
+        SetupBullets();
+        mainCamera = Camera.main;
+        cameraTransform = mainCamera.transform;
     }
 
     void Update()
@@ -88,7 +98,10 @@ public class Player : MonoBehaviour, IDieable
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
         animator.SetTrigger("Shoot");
-        //magic.GetComponent<Animator>().SetTrigger("Shoot");
+        GameObject shootBullet = bulletPool.GetBullet();
+        shootBullet.transform.position = magic.transform.position;
+        shootBullet.transform.rotation = magic.transform.rotation; 
+
     }
 
     void OnDestroy()
@@ -109,5 +122,20 @@ public class Player : MonoBehaviour, IDieable
 
     public void OnRevive()
     {
+    }
+
+    private void SetupBullets(){
+        for (int i = 0; i < 10; i++)
+        {
+            GameObject bullet = Instantiate(bullet, magic.transform.position, magic.transform.rotation);
+            bullet.SetActive(false);
+            bullets.Enqueue(bullet);
+        }
+    }
+
+    private void DespawnBullet(GameObject bullet)
+    {
+        bullet.SetActive(false);
+        bullets.Enqueue(bullet);
     }
 }

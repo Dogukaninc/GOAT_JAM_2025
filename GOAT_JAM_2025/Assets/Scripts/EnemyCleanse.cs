@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EnemyCleanse : MonoBehaviour
 {
-    private bool isDamagable = false;
+    public bool isDamagable {get; private set; } = false;
     private Animator animator;
     private Renderer renderer;
     void Awake()
@@ -15,7 +15,7 @@ public class EnemyCleanse : MonoBehaviour
     {
         renderer.material.color = new Color(1, 1, 1, renderer.material.color.a + speed * Time.deltaTime);
         Debug.Log(renderer.material.color.a);
-        
+
         if (renderer.material.color.a >= 1)
         {
             Debug.Log("Enemy is now damagable");
@@ -23,4 +23,6 @@ public class EnemyCleanse : MonoBehaviour
             //animator.SetBool("isDamagable", true);
         }
     }
+
+    
 }
