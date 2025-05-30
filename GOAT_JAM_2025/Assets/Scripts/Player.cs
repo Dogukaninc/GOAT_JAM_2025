@@ -1,10 +1,10 @@
 using _Main.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Scripts.GeneralSystems;
 
 public class Player : MonoBehaviour, IDieable
 {
-    public BulletPool bulletPool{get; private set;}
     [field: SerializeField] public bool IsDead { get; set; }
 
     [SerializeField] private float moveSpeed = 5f;
@@ -19,7 +19,6 @@ public class Player : MonoBehaviour, IDieable
     private float verticalVelocity;
     private float turnSmoothVelocity;
     private float lanternRadius = 10f;
-    private Queue<GameObject> bullets = new Queue<GameObject>();
     private Camera mainCamera;
     private Animator animator;
     private CharacterController controller;
@@ -34,8 +33,6 @@ public class Player : MonoBehaviour, IDieable
 
     void Awake()
     {
-        bulletPool = new BulletPool();
-        bulletPool.InitializePool();
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
@@ -49,13 +46,11 @@ public class Player : MonoBehaviour, IDieable
 
     void Start()
     {
-        SetupBullets();
         mainCamera = Camera.main;
         cameraTransform = mainCamera.transform;
     }
 
-    void Update()
-    {
+    void Update(){
         Vector2 input = moveAction.ReadValue<Vector2>();
         movement = new Vector3(input.x, 0f, input.y).normalized;
 
@@ -87,8 +82,7 @@ public class Player : MonoBehaviour, IDieable
         }
     }
 
-    private void OnLanternActionPerformed(InputAction.CallbackContext context)
-    {
+    private void OnLanternActionPerformed(InputAction.CallbackContext context){
         isLanternButtonHeld = !isLanternButtonHeld;
         lantern.GetComponent<Lantern>().OnLanternOn();
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
@@ -97,15 +91,17 @@ public class Player : MonoBehaviour, IDieable
 
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
+        GameObject oldBullet = magic.transform.GetChild(0).gameObject;
         animator.SetTrigger("Shoot");
-        GameObject shootBullet = bulletPool.GetBullet();
-        shootBullet.transform.position = magic.transform.position;
-        shootBullet.transform.rotation = magic.transform.rotation; 
+        oldBullet.transform.parent = null;
+        oldBullet.GetComponent<Bullet>().Thrown();
+        GameObject shootBullet = Instantiate(bullet,magic.transform.position,magic.transform.rotation);
+        shootBullet.transform.SetParent(magic.transform);
+
 
     }
 
-    void OnDestroy()
-    {
+    void OnDestroy(){
         if (lanternAction != null)
         {
             lanternAction.started -= OnLanternActionPerformed;
@@ -116,26 +112,10 @@ public class Player : MonoBehaviour, IDieable
             shootAction.performed -= OnShootActionPerformed;
     }
 
-    public void OnDead()
-    {
+    public void OnDead(){
     }
 
-    public void OnRevive()
-    {
+    public void OnRevive(){
     }
 
-    private void SetupBullets(){
-        for (int i = 0; i < 10; i++)
-        {
-            GameObject bullet = Instantiate(bullet, magic.transform.position, magic.transform.rotation);
-            bullet.SetActive(false);
-            bullets.Enqueue(bullet);
-        }
-    }
-
-    private void DespawnBullet(GameObject bullet)
-    {
-        bullet.SetActive(false);
-        bullets.Enqueue(bullet);
-    }
 }

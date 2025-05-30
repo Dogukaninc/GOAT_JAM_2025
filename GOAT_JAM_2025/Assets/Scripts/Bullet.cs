@@ -1,12 +1,17 @@
 using UnityEngine;
 
+using Scripts.GeneralSystems;
+
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float damage = 10f;
     [SerializeField] private float speed = 10f;
-    [SerializeField] private float lifeTime = 4f;
-    private GameObject player;
+    [SerializeField] private float lifespan = 4f;
 
+    public void Thrown(){
+        GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.Impulse);
+        Destroy(gameObject,lifespan);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,19 +19,8 @@ public class Bullet : MonoBehaviour
         {
             other.gameObject.GetComponent<Health>().TakeDamage(damage);
             Debug.Log("Bullet hit enemy");
-            DespawnBullet();
+            Destroy(gameObject);
         }
     }
 
-    public void SetupBullet(GameObject player){
-        transform.position = player.GetChildWithTag("Magic").transform.position;
-        transform.rotation = player.GetChildWithTag("Magic").transform.rotation;
-        GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.Impulse);
-        Invoke(nameof(DespawnBullet), lifeTime);
-    }
-
-    private void DespawnBullet()
-    {
-        player.GetComponent<Player>().bulletPool.ReturnBullet(gameObject);
-    }
 }
