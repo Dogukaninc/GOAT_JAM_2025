@@ -1,6 +1,7 @@
 using _Main.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Scripts.GeneralSystems;
 
 public class Player : MonoBehaviour, IDieable
 {
@@ -9,12 +10,16 @@ public class Player : MonoBehaviour, IDieable
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private float bulletSpeed = 10f;
+
     [SerializeField] private GameObject lantern;
     [SerializeField] private GameObject magic;
+    [SerializeField] private GameObject bullet;
 
     private float verticalVelocity;
     private float turnSmoothVelocity;
-
+    private float lanternRadius = 10f;
+    private Camera mainCamera;
     private Animator animator;
     private CharacterController controller;
     private Vector3 movement;
@@ -41,11 +46,11 @@ public class Player : MonoBehaviour, IDieable
 
     void Start()
     {
-        cameraTransform = Camera.main.transform;
+        mainCamera = Camera.main;
+        cameraTransform = mainCamera.transform;
     }
 
-    void Update()
-    {
+    void Update(){
         Vector2 input = moveAction.ReadValue<Vector2>();
         movement = new Vector3(input.x, 0f, input.y).normalized;
 
@@ -77,8 +82,7 @@ public class Player : MonoBehaviour, IDieable
         }
     }
 
-    private void OnLanternActionPerformed(InputAction.CallbackContext context)
-    {
+    private void OnLanternActionPerformed(InputAction.CallbackContext context){
         isLanternButtonHeld = !isLanternButtonHeld;
         lantern.GetComponent<Lantern>().OnLanternOn();
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
@@ -87,12 +91,17 @@ public class Player : MonoBehaviour, IDieable
 
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
+        GameObject oldBullet = magic.transform.GetChild(0).gameObject;
         animator.SetTrigger("Shoot");
-        //magic.GetComponent<Animator>().SetTrigger("Shoot");
+        oldBullet.transform.parent = null;
+        oldBullet.GetComponent<Bullet>().Thrown();
+        GameObject shootBullet = Instantiate(bullet,magic.transform.position,magic.transform.rotation);
+        shootBullet.transform.SetParent(magic.transform);
+
+
     }
 
-    void OnDestroy()
-    {
+    void OnDestroy(){
         if (lanternAction != null)
         {
             lanternAction.started -= OnLanternActionPerformed;
@@ -103,11 +112,10 @@ public class Player : MonoBehaviour, IDieable
             shootAction.performed -= OnShootActionPerformed;
     }
 
-    public void OnDead()
-    {
+    public void OnDead(){
     }
 
-    public void OnRevive()
-    {
+    public void OnRevive(){
     }
+
 }
