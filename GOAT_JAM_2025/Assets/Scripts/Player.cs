@@ -32,6 +32,7 @@ public class Player : MonoBehaviour, IDieable
     private InputAction lanternAction;
     private bool isLanternOn;
     private bool isLanternButtonHeld;
+    private Vector3 moveDir;
 
     void Awake()
     {
@@ -69,45 +70,42 @@ public class Player : MonoBehaviour, IDieable
 
     void Update()
     {
-        // Handle movement
+        // Handle movement input
         Vector2 input = moveAction.ReadValue<Vector2>();
         movement = new Vector3(input.x, 0f, input.y).normalized;
 
-        // Handle gravity
+        // Gravity
         if (!controller.isGrounded)
-        {
             verticalVelocity += gravity * Time.deltaTime;
-        }
         else
-        {
             verticalVelocity = -0.5f;
-        }
 
-        // Rotate towards mouse position
+        // Rotate towards mouse
         Vector3 mousePosition = GetMouseWorldPosition();
         Vector3 directionToMouse = mousePosition - transform.position;
-        directionToMouse.y = 0f; // Keep rotation only on Y axis
-        
+        directionToMouse.y = 0f;
         if (directionToMouse != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(directionToMouse);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSmoothTime * 10f * Time.deltaTime);
         }
 
-        // Handle movement
+        moveDir = Vector3.zero; // Hatalı yön aktarımını önlemek için HER FRAME sıfırla!
+
         if (movement.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f);
             controller.Move((moveDir.normalized * moveSpeed + verticalMove) * Time.deltaTime);
-            _playerAnimationHandler.AnimateMovement(moveDir);
         }
         else
         {
             Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f);
             controller.Move(verticalMove * Time.deltaTime);
         }
+
+        _playerAnimationHandler.AnimateMovement(moveDir);
     }
 
     private void OnLanternActionPerformed(InputAction.CallbackContext context){

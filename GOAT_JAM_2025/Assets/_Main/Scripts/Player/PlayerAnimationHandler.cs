@@ -4,10 +4,7 @@ namespace _Main.Scripts.AI.Enemy.Controllers
 {
     public class PlayerAnimationHandler : MonoBehaviour
     {
-        private int _idleClipName = Animator.StringToHash("Idle");
-        private int _attackClipName = Animator.StringToHash("Attack");
-        private int _runClipName = Animator.StringToHash("Run");
-        private int _getHitClipName = Animator.StringToHash("GetHit");
+        private int _holdLantern = Animator.StringToHash("HoldLantern");
 
         public Animator animator;
         
@@ -18,28 +15,27 @@ namespace _Main.Scripts.AI.Enemy.Controllers
         {
             Vector3 localMovement = transform.InverseTransformDirection(movement);
 
-            float velocityZ = localMovement.z;
             float velocityX = localMovement.x;
+            float velocityZ = localMovement.z;
 
-            animator.SetFloat(VelocityZ, velocityZ, 0.1f, Time.deltaTime);
-            animator.SetFloat(VelocityX, velocityX, 0.1f, Time.deltaTime);
-        }
-    
-        public void PlayIdleClip()
-        {
-           
+            // Threshold altında ise sıfırla
+            if (Mathf.Abs(velocityZ) < 0.05f) velocityZ = 0f;
+            if (Mathf.Abs(velocityX) < 0.05f) velocityX = 0f;
+
+            Vector2 planar = new Vector2(velocityX, velocityZ);
+            if (planar.magnitude > 0f)
+            {
+                planar.Normalize(); // sabit hız
+                velocityX = planar.x;
+                velocityZ = planar.y;
+            }
+
+            animator.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+            animator.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
         }
 
-        public void PlayRunClip()
-        {
-           
-        }
 
-        public void PlayGetHitClip()
-        {
-        }
-
-        public void PlayAttackClip()
+        public void HoldLanternAnim()
         {
             
         }
