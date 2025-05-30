@@ -21,6 +21,7 @@ namespace Scripts.AI.Enemy.States
             Debug.Log("Hareket Ediyorum");
             _agent.isStopped = false;
             _target = GeneralValuesHolder.Instance.Player.transform;
+            _enemyController.EnemyAnimationHandler.PlayRunClip();
         }
 
         public void Tick()

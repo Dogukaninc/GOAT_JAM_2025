@@ -1,5 +1,4 @@
-﻿using _Main.Scripts.ScriptableClasses;
-using Scripts.AI.Base.Interfaces;
+﻿using Scripts.AI.Base.Interfaces;
 using Scripts.GeneralSystems;
 using UnityEngine;
 
@@ -11,11 +10,13 @@ namespace Scripts.AI.Enemy.States
         private float _attackCooldown;
         private float _attackDefaultTime;
         private float _damage;
+        private EnemyController _enemyController;
 
-        public AttackState(EnemySo enemySo)
+        public AttackState(EnemyController enemyController)
         {
-            _attackCooldown = enemySo.attackCooldown;
-            _damage = enemySo.damage;
+            _attackCooldown = enemyController.EnemySo.attackCooldown;
+            _damage = enemyController.EnemySo.damage;
+            _enemyController = enemyController;
         }
 
         public void OnEnter()
@@ -33,10 +34,13 @@ namespace Scripts.AI.Enemy.States
                 _attackCooldown = _attackDefaultTime;
                 Attack();
             }
+
+            Debug.Log("Attack Cooldown:" + _attackCooldown);
         }
 
         public void OnExit()
         {
+            _attackCooldown = _attackDefaultTime;
         }
 
         private void Attack()
@@ -44,6 +48,8 @@ namespace Scripts.AI.Enemy.States
             if (_player.TryGetComponent(out Health playerHealth))
             {
                 playerHealth.TakeDamage(_damage);
+                _enemyController.EnemyAnimationHandler.PlayAttackClip();
+                Debug.Log("<color=red>Attack Made</color>");
             }
             else
             {

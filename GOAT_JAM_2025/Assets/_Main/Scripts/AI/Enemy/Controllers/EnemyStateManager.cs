@@ -26,9 +26,9 @@ namespace Assets._Scripts.Enemy
         private void SetAgentStates()
         {
             _stateMachine = new StateMachine();
-            var idleState = new Idle();
+            var idleState = new Idle(_enemyController);
             var moveToTargetState = new MoveToTargetState(_enemyController);
-            var attackState = new AttackState(_enemyController.EnemySo);
+            var attackState = new AttackState(_enemyController);
 
             Func<bool> isPlayerFar = () => !IsPlayerDead() && IsPlayerFarAway() && _enemyController.isReadyToMove;
             Func<bool> isNoTarget = () => IsPlayerDead() || !_enemyController.isReadyToMove;
