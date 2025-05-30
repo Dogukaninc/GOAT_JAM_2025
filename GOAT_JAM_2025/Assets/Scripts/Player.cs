@@ -9,6 +9,9 @@ public class Player : MonoBehaviour,IDieable
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
     [SerializeField] private float gravity = -9.81f;
+    [SerializeField] private GameObject lantern;
+    [SerializeField] private GameObject magic;
+
     private float verticalVelocity;
     private float turnSmoothVelocity;
     
@@ -79,6 +82,7 @@ public class Player : MonoBehaviour,IDieable
         Debug.Log("Lantern action performed");
         isLanternButtonHeld = !isLanternButtonHeld;
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
+        lantern.GetComponent<Animator>().SetBool("IsLanternOn", isLanternButtonHeld);       
     }
 
 
@@ -87,6 +91,7 @@ public class Player : MonoBehaviour,IDieable
     {
         Debug.Log("Shoot action performed");
         animator.SetTrigger("Shoot");
+        magic.GetComponent<Animator>().SetTrigger("Shoot");
     }
 
     void OnDestroy()
