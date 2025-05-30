@@ -14,12 +14,14 @@ namespace Scripts.AI.Enemy.States
         /// Hasar so'su olacak
         /// Stopping distance so'dan gelecek ve player'a bu kadar hasar verecek
         /// </summary>
-        
-        public Idle()
+        private EnemyController _enemyController;
+
+        public Idle(EnemyController enemyController)
         {
-            
+            _enemyController = enemyController;
+            _enemyController.EnemyAnimationHandler.PlayIdleClip();
         }
-        
+
         public void OnEnter()
         {
             Debug.Log("Idle Statedeyim");
@@ -28,7 +30,7 @@ namespace Scripts.AI.Enemy.States
         public void Tick()
         {
         }
-        
+
         public void OnExit()
         {
         }
