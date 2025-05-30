@@ -20,19 +20,21 @@ namespace Scripts.AI.Enemy.States
         {
             Debug.Log("Hareket Ediyorum");
             _agent.isStopped = false;
-
             _target = GeneralValuesHolder.Instance.Player.transform;
-            if (_target != null)
-            {
-                _agent.SetDestination(_target.position);
-            }
         }
 
         public void Tick()
         {
-            if (IsCloseEnough())
+            if (_target != null)
             {
-                _agent.isStopped = true;
+                if (!IsCloseEnough())
+                {
+                    _agent.SetDestination(_target.position);
+                }
+                else
+                {
+                    _agent.isStopped = true;
+                }
             }
         }
 

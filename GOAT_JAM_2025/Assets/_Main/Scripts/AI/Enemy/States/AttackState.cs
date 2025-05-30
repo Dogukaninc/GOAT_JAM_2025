@@ -21,6 +21,7 @@ namespace Scripts.AI.Enemy.States
         public void OnEnter()
         {
             Debug.Log("Attack State'e girdim");
+            _player = GeneralValuesHolder.Instance.Player;
             _attackDefaultTime = _attackCooldown;
         }
 
