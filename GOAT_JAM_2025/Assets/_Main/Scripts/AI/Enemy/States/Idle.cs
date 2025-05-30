@@ -1,4 +1,5 @@
 ﻿using Scripts.AI.Base.Interfaces;
+using UnityEngine;
 
 namespace Scripts.AI.Enemy.States
 {
@@ -21,6 +22,7 @@ namespace Scripts.AI.Enemy.States
         
         public void OnEnter()
         {
+            Debug.Log("Idle Statedeyim");
         }
 
         public void Tick()

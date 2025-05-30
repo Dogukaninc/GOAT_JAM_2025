@@ -11,9 +11,11 @@ namespace Assets._Scripts.Enemy
         [SerializeField] private TextMeshProUGUI stateDebugText;
 
         private StateMachine _stateMachine;
+        private EnemyController _enemyController;
 
-        public void Initialize()
+        private void Awake()
         {
+            _enemyController = GetComponent<EnemyController>();
         }
 
         private void Start()
@@ -25,11 +27,16 @@ namespace Assets._Scripts.Enemy
         {
             _stateMachine = new StateMachine();
             var idleState = new Idle();
-            var moveToTargetState = new MoveToTargetState();
+            var moveToTargetState = new MoveToTargetState(_enemyController);
+            var attackState = new AttackState(_enemyController.EnemySo);
 
-            // Func<bool> isPlayerAlive = () => IsPlayerAlive();
+            Func<bool> isPlayerAlive = () => IsPlayerAlive() && IsPlayerFarAway();
+            Func<bool> isNoTarget = () => !IsPlayerAlive() && _enemyController.isReadyToMove;
+            Func<bool> isReadyToAttack = () => IsPlayerAlive() && !IsPlayerFarAway() && _enemyController.isReadyToMove;
 
-            // _stateMachine.AddAnyTransition(moveState, isPlayerAlive);
+            _stateMachine.AddAnyTransition(moveToTargetState, isPlayerAlive);
+            _stateMachine.AddAnyTransition(idleState, isNoTarget);
+            _stateMachine.AddAnyTransition(attackState, isReadyToAttack);
 
             _stateMachine.SetState(idleState);
         }
@@ -37,10 +44,14 @@ namespace Assets._Scripts.Enemy
         private void Update()
         {
             _stateMachine.Tick();
-
+            
             stateDebugText.SetText(_stateMachine.CurrentState.GetType().Name);
         }
-        
-        // private void IsPlayerAlive()=>GeneralValuesHolder.Instance.Player.
+
+        private bool IsPlayerAlive() => GeneralValuesHolder.Instance.Player.IsDead;
+
+        private bool IsPlayerFarAway() =>
+            Vector3.Distance(_enemyController.transform.position, GeneralValuesHolder.Instance.Player.transform.position) >
+            _enemyController.StoppingDistance;
     }
 }
