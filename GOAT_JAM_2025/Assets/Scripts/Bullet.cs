@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float lifespan = 4f;
 
     public void Thrown(){
-        GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(transform.up * speed, ForceMode.Impulse);
         Destroy(gameObject,lifespan);
     }
 

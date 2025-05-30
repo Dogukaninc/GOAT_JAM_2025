@@ -50,11 +50,27 @@ public class Player : MonoBehaviour, IDieable
         cameraTransform = mainCamera.transform;
     }
 
-    void Update(){
+    private Vector3 GetMouseWorldPosition()
+    {
+        Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        float rayDistance;
+        
+        if (groundPlane.Raycast(ray, out rayDistance))
+        {
+            return ray.GetPoint(rayDistance);
+        }
+        
+        return transform.position;
+    }
+
+    void Update()
+    {
+        // Handle movement
         Vector2 input = moveAction.ReadValue<Vector2>();
         movement = new Vector3(input.x, 0f, input.y).normalized;
 
-
+        // Handle gravity
         if (!controller.isGrounded)
         {
             verticalVelocity += gravity * Time.deltaTime;
@@ -64,13 +80,21 @@ public class Player : MonoBehaviour, IDieable
             verticalVelocity = -0.5f;
         }
 
+        // Rotate towards mouse position
+        Vector3 mousePosition = GetMouseWorldPosition();
+        Vector3 directionToMouse = mousePosition - transform.position;
+        directionToMouse.y = 0f; // Keep rotation only on Y axis
+        
+        if (directionToMouse != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(directionToMouse);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSmoothTime * 10f * Time.deltaTime);
+        }
+
+        // Handle movement
         if (movement.magnitude >= 0.1f)
         {
             float targetAngle = Mathf.Atan2(movement.x, movement.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f);
             controller.Move((moveDir.normalized * moveSpeed + verticalMove) * Time.deltaTime);
