@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Increase Damage
   skillDescription: You feel an immense power increase in your crossbow
-  skillIcon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  skillIcon: {fileID: 21300000, guid: 37064adbcac1e374a8459adca9f581fb, type: 3}
