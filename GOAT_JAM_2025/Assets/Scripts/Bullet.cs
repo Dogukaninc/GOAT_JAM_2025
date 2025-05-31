@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<EnemyCleanse>().isDamagable)
         {
             var iDieable = other.gameObject.GetComponent<IDieable>();
-            other.gameObject.GetComponent<Health>().TakeDamage(damage, null, false, false, iDieable.OnDead);
+            other.gameObject.GetComponent<Health>().TakeDamage(damage, other.transform, false, false, iDieable.OnDead);
             Debug.Log("Bullet hit enemy");
             Destroy(this.gameObject);
         }

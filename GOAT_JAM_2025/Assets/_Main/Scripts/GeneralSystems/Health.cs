@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Main._Project.Scripts.Items.FloatingTexts;
+using Main._Project.Scripts.Utilities.Pool;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,8 +47,12 @@ namespace Scripts.GeneralSystems
                 CurrentHealth -= roundedHealth;
             }
 
-            // var damageText = PoolSystem.Instance.SpawnGameObject("DamageText");
-            // damageText.GetComponent<DamageText>().SetText(damageTextTransform.position, damage.ToString(), isCrit, isRandomizePos);
+            if (damageTextTransform != null)
+            {
+                var damageText = PoolSystem.Instance.SpawnGameObject("DamageText");
+                damageText.GetComponent<DamageText>().SetText(damageTextTransform.position, damage.ToString(), isCrit, isRandomizePos);
+            }
+
             UpdateHealthUI();
         }
 

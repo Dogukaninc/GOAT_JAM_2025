@@ -394,11 +394,12 @@ GameObject:
   - component: {fileID: 3019033881772436944}
   - component: {fileID: 4475309764426439368}
   - component: {fileID: 7440281142388832585}
+  - component: {fileID: 629926087535751226}
   - component: {fileID: 4920321014700857212}
   - component: {fileID: 2763429323021429687}
   m_Layer: 0
   m_Name: Enemy_Ai
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -478,6 +479,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6070838636580101025}
+--- !u!114 &629926087535751226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104995453650656520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82c20fce4ed25bb42a0d0354e27c77ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <isDamagable>k__BackingField: 0
 --- !u!195 &4920321014700857212
 NavMeshAgent:
   m_ObjectHideFlags: 0

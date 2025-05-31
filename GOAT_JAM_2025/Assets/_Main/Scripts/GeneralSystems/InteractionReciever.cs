@@ -8,7 +8,8 @@ namespace _Main.Scripts.GeneralSystems
     {
         [SerializeField] private float radius;
         [SerializeField] private SphereCollider _collider;
-
+        
+        
         private void Start()
         {
             _collider.radius = radius;
@@ -18,6 +19,8 @@ namespace _Main.Scripts.GeneralSystems
         {
             if (other.TryGetComponent(out IInteractable interactable))
             {
+                Debug.Log("Interactable var");
+                
                 interactable.Interact();
             }
         }
@@ -26,6 +29,8 @@ namespace _Main.Scripts.GeneralSystems
         {
             if (other.TryGetComponent(out IInteractable interactable))
             {
+                Debug.Log("Interactable çıktı");
+                
                 interactable.UnInteract();
             }
         }

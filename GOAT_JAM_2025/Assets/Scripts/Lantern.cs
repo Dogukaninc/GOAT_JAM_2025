@@ -6,13 +6,11 @@ public class Lantern : MonoBehaviour
     private Collider collider;
     private Light light;
 
-
     void Awake()
     {
         light = transform.parent.GetComponentInChildren<Light>();
         collider = GetComponent<Collider>();
     }
-
 
     public void OnLanternOn()
     {

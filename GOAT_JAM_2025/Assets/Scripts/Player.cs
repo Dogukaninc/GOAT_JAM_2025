@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using _Main.Scripts.AI.Enemy.Controllers;
 using _Main.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Scripts.GeneralSystems;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour, IDieable
 {
