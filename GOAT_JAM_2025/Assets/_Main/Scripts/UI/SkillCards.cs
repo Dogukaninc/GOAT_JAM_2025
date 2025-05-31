@@ -31,7 +31,7 @@ public class SkillCards : MonoBehaviour
         originalCardHolderPosition = cardHolder.GetComponent<RectTransform>().position;
         originalPosition = rectTransform.position;
         originalRotation = rectTransform.rotation.eulerAngles;
-        targetPosition = rectTransform.position + (rectTransform.up * positionAmount);
+        targetPosition = rectTransform.position + (rectTransform.up * Screen.height/2);
         rectTransform.DOMove(targetPosition, 1f);
 
     }
@@ -72,7 +72,7 @@ public class SkillCards : MonoBehaviour
         emptyObject.SetActive(true);
         skillEffect.ApplyEffect(amount);
         yield return new WaitForSeconds(0.3f);
-        cardHolder.GetComponent<RectTransform>().DOAnchorPosY(originalCardHolderPosition.y - 1500, 0.75f);
+        cardHolder.GetComponent<RectTransform>().DOMove(originalCardHolderPosition - rectTransform.up * Screen.height, 0.75f);
         yield return new WaitForSeconds(0.75f);
         messageBox.GetComponent<RectTransform>().GetChild(0).GetComponent<TextMeshProUGUI>().text = skillEffect.skillDescription;
         messageBox.SetActive(true);
