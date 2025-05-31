@@ -15,3 +15,4 @@ MonoBehaviour:
   skillName: Increase Light Power
   skillDescription: You feel the support of everything you consider holy in your
     light
+  skillIcon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
