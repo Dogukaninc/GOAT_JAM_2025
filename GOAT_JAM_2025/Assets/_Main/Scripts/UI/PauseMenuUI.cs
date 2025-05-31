@@ -12,6 +12,9 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private RectTransform _pausePanelRect;
     [SerializeField] private float _pausePanelTweenDuration;
     [SerializeField] private float topPosY, middlePosY;
+    [SerializeField] private GameObject _playerStatsUI;
+    [SerializeField] private float healthPosY, bottomPosY;
+    [SerializeField] private RectTransform _healthRect;
 
     private void Update()
     {
@@ -27,11 +30,13 @@ public class PauseMenuUI : MonoBehaviour
     private void Pause()
     {
         PausePanelIntro();
+        ClosePlayerStats();
     }
 
     public void Resume()
     {
         PausePanelOutro();
+        OpenPlayerStats();
         Time.timeScale = 1f;
     }
 
@@ -70,4 +75,27 @@ public class PauseMenuUI : MonoBehaviour
             _cursorCross.SetActive(true);
         });
     }
+
+    public void OpenPlayerStats()
+    {
+         _healthRect.DOAnchorPosY(healthPosY, _pausePanelTweenDuration);
+        _playerStatsUI.SetActive(true);
+       
+
+    }
+
+    public void ClosePlayerStats()
+    {
+        _healthRect.DOAnchorPosY(bottomPosY, _pausePanelTweenDuration).OnComplete(() =>
+        {
+            _playerStatsUI.SetActive(false);
+        });
+
+
+    }
+
+
+
+
+
 }
