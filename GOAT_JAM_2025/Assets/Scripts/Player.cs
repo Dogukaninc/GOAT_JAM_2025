@@ -16,7 +16,12 @@ public class Player : MonoBehaviour, IDieable
 
     [Header("Weapon Settings")] [SerializeField]
     private float reloadTime = 1f;
+
     public Transform mouseTargetPos;
+
+    [Header("Lantern Settings")] [SerializeField]
+    private MeshRenderer lanternMesh;
+
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -125,13 +130,15 @@ public class Player : MonoBehaviour, IDieable
         isLanternButtonHeld = !isLanternButtonHeld;
         lantern.GetComponent<Lantern>().OnLanternOn();
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
+        lanternMesh.enabled = true;
         HoldLantern();
     }
 
     private void OnLanternActionCanceled(InputAction.CallbackContext context)
     {
         isLanternButtonHeld = false;
-        // lantern.GetComponent<Lantern>().OnLanternOff();
+        lantern.GetComponent<Lantern>().OnLanternOff();
+        lanternMesh.enabled = false;
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
         UnHoldLantern();
     }
