@@ -20,11 +20,10 @@ public class CrosshairController : MonoBehaviour
         crosshairParts = new RectTransform[count];
         directions = new Vector2[count];
 
-        
-        directions[0] = Vector2.down;    
-        directions[1] = Vector2.up;  
-        directions[2] = Vector2.right;   
-        directions[3] = Vector2.left; 
+        directions[0] = Vector2.down;
+        directions[1] = Vector2.up;
+        directions[2] = Vector2.right;
+        directions[3] = Vector2.left;
 
         for (int i = 0; i < count; i++)
         {
@@ -35,7 +34,7 @@ public class CrosshairController : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.qKey.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             Expand();
         }

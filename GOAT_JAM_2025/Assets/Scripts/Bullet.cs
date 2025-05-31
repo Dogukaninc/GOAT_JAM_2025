@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
 
     public void Thrown()
     {
-        GetComponent<Rigidbody>().AddForce(transform.up * speed, ForceMode.Impulse);
+        GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.Impulse);
         Destroy(gameObject, lifespan);
     }
 

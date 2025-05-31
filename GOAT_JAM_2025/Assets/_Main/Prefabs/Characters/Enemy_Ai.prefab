@@ -395,6 +395,7 @@ GameObject:
   - component: {fileID: 4475309764426439368}
   - component: {fileID: 7440281142388832585}
   - component: {fileID: 4920321014700857212}
+  - component: {fileID: 2763429323021429687}
   m_Layer: 0
   m_Name: Enemy_Ai
   m_TagString: Untagged
@@ -499,6 +500,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &2763429323021429687
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104995453650656520}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.44722468
+  m_Height: 2.1742504
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.0687, z: 0.006597042}
 --- !u!1001 &2882678341057661358
 PrefabInstance:
   m_ObjectHideFlags: 0

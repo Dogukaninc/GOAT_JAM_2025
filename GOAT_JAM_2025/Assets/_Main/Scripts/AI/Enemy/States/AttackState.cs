@@ -21,7 +21,6 @@ namespace Scripts.AI.Enemy.States
 
         public void OnEnter()
         {
-            Debug.Log("Attack State'e girdim");
             _player = GeneralValuesHolder.Instance.Player;
             _attackDefaultTime = _attackCooldown;
         }
@@ -34,8 +33,6 @@ namespace Scripts.AI.Enemy.States
                 _attackCooldown = _attackDefaultTime;
                 Attack();
             }
-
-            Debug.Log("Attack Cooldown:" + _attackCooldown);
         }
 
         public void OnExit()
@@ -49,7 +46,6 @@ namespace Scripts.AI.Enemy.States
             {
                 playerHealth.TakeDamage(_damage);
                 _enemyController.EnemyAnimationHandler.PlayAttackClip();
-                Debug.Log("<color=red>Attack Made</color>");
             }
             else
             {
