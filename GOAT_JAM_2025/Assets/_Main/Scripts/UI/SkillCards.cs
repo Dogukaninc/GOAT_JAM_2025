@@ -7,41 +7,43 @@ public class SkillCards : MonoBehaviour
     [SerializeField] private float amount;
     [SerializeField] private SkillEffect skillEffect;
     [SerializeField] private Vector3 rotationAmount;
+    [SerializeField] private float positionAmount;
     [SerializeField] private GameObject emptyObject;
     private RectTransform rectTransform;
-    private Vector3 originalPosition;
+    [SerializeField] private Vector3 originalPosition;
     private Vector3 originalRotation;
     private Vector3 originalCardHolderPosition;
     private GameObject cardHolder;
-    private void OnEnable()
+
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         cardHolder = rectTransform.parent.gameObject;
+
+    }
+
+    private void Start()
+    {
         originalCardHolderPosition = cardHolder.GetComponent<RectTransform>().position;
         originalPosition = rectTransform.position;
         originalRotation = rectTransform.rotation.eulerAngles;
-        rectTransform.DOAnchorPosY(rectTransform.position.y + 150, 1f);
-    }
-
-    private void OnDisable(){
-        cardHolder.GetComponent<RectTransform>().position = originalCardHolderPosition;
-        rectTransform.position = originalPosition;
+        rectTransform.DOAnchorPosY(rectTransform.position.y + positionAmount, 1f);
     }
 
     public void OnCursorEnter()
     {
         if (GeneralValuesHolder.Instance.SkillSelected) return;
-        rectTransform.DOKill();
-        rectTransform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f);
-        rectTransform.DORotate(originalRotation + rotationAmount, 0.5f);
+        var seq = DOTween.Sequence();
+        seq.Append(rectTransform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f));
+        seq.Join(rectTransform.DORotate(originalRotation + rotationAmount, 0.5f));
     }
 
     public void OnCursorExit()
     {
         if (GeneralValuesHolder.Instance.SkillSelected) return;
-        rectTransform.DOKill();
-        rectTransform.DOScale(new Vector3(1f, 1f, 1f), 0.5f);
-        rectTransform.DORotate(originalRotation, 0.5f);
+        var seq = DOTween.Sequence();
+        seq.Append(rectTransform.DOScale(new Vector3(1f, 1f, 1f), 0.5f));
+        seq.Join(rectTransform.DORotate(originalRotation, 0.5f));
     }
 
     public void OnCursorClick()
@@ -49,7 +51,7 @@ public class SkillCards : MonoBehaviour
         if (GeneralValuesHolder.Instance.SkillSelected) return;
         StartCoroutine(OnCursorClickCoroutine());
     }
-    
+
     private IEnumerator OnCursorClickCoroutine()
     {
         GeneralValuesHolder.Instance.SkillSelected = true;
@@ -62,12 +64,11 @@ public class SkillCards : MonoBehaviour
         rectTransform.DORotate(originalRotation - new Vector3(0, -1f, 0), 0.6f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.3f);
         emptyObject.SetActive(true);
-        skillEffect.ApplyEffect(amount);        
+        skillEffect.ApplyEffect(amount);
         yield return new WaitForSeconds(0.3f);
-        cardHolder.GetComponent<RectTransform>().DOAnchorPosY(originalCardHolderPosition.y - 1000, 0.5f);
-        yield return new WaitForSeconds(0.5f);
-        cardHolder.SetActive(false);
-
-
+        rectTransform.DOAnchorPosY(originalCardHolderPosition.y - 1200, 0.75f);
+        yield return new WaitForSeconds(0.75f);
+        Destroy(cardHolder);
     }
+
 }
