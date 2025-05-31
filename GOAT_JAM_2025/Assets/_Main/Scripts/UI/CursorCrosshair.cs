@@ -16,7 +16,7 @@ public class CursorCrosshair : MonoBehaviour
         _canvas = GetComponentInParent<Canvas>();
         Cursor.visible = false;
         
-        // Initialize position
+        
         _targetPosition = _crosshairRect.anchoredPosition;
     }
 
