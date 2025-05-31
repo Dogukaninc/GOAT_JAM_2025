@@ -20,7 +20,6 @@ public class Baphomet : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(Time.timeScale);
         if(speaking && Mouse.current.leftButton.wasPressedThisFrame) { 
             nextSpeech();
         }
@@ -51,7 +50,8 @@ public class Baphomet : MonoBehaviour
             //start character movement
             levelCount++;
             speaking = false;
-            rectTransform.DOMoveX(rectTransform.position.x - Screen.width / 2, 0.5f).OnComplete(() => Time.timeScale = 1);
+            Time.timeScale = 1;
+            rectTransform.DOMoveX(rectTransform.position.x - Screen.width / 2, 0.5f);
 
         }
     }
