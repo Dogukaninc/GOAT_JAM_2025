@@ -3,26 +3,21 @@ using UnityEngine;
 
 public class EnemyCleanse : MonoBehaviour
 {
-    [Header("Fade Ayarları")]
-    [Tooltip("Partikül sistemi yay-dım (emission) hızının başlangıç değeri")]
+    [Header("Fade Ayarları")] [Tooltip("Partikül sistemi yay-dım (emission) hızının başlangıç değeri")]
     public float initialEmissionRate = 50f;
 
     [Tooltip("Destroy etmek yerine, sadece partikülleri devre dışı bırakmak istiyorsanız false yapın.")]
     public bool destroyWhenEmpty = true;
 
-    [field: SerializeField]
-    public bool isDamagable { get; private set; } = false;
+    [field: SerializeField] public bool isDamagable { get; private set; } = false;
 
-    [Header("Darkness Ayarları")]
-    [SerializeField, Tooltip("Kalan karanlık miktarı. 0 → tamamen temizlenmiş.")]
+    [Header("Darkness Ayarları")] [SerializeField, Tooltip("Kalan karanlık miktarı. 0 → tamamen temizlenmiş.")]
     private float darknessAmount = 5f;
 
     [SerializeField, Tooltip("DarknessAmount'un ilk değeri (sürekli kontrol için)")]
     private float initialDarknessAmount = 5f;
 
-    [Space]
-    [Header("Partikül Sistemi Referansı")]
-    [SerializeField]
+    [Space] [Header("Partikül Sistemi Referansı")] [SerializeField]
     private ParticleSystem darkSmokeParticle;
 
     private ParticleSystem.EmissionModule emissionModule;
@@ -43,8 +38,6 @@ public class EnemyCleanse : MonoBehaviour
         }
 
         emissionModule = darkSmokeParticle.emission;
-
-        // Başlangıçta emission rate'i override edelim
         emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(initialEmissionRate);
     }
 
@@ -54,46 +47,28 @@ public class EnemyCleanse : MonoBehaviour
             return;
 
         darknessAmount -= Time.deltaTime * speed;
+        
+        float normalized = Mathf.Clamp01(darknessAmount / initialDarknessAmount);
+        float newRate = initialEmissionRate * normalized;
+        emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(newRate);
+
+        if (!isFading)
+        {
+            isFading = true;
+            darkSmokeParticle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        }
+
         if (darknessAmount <= 0f)
         {
             darknessAmount = 0f;
+            DestroyWhenEmpty();
             isDamagable = true;
             Debug.Log("<color=green> Enemy is now damagable </color>");
         }
     }
 
-    void Update()
+    private void DestroyWhenEmpty()
     {
-        if (!isDamagable)
-            return;
-
-        float normalized = Mathf.Clamp01(darknessAmount / initialDarknessAmount);
-        float newRate = initialEmissionRate * normalized;
-        emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(newRate);
-
-        if (darknessAmount <= 0f && !isFading)
-        {
-            isFading = true;
-            darkSmokeParticle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-
-            StartCoroutine(DestroyWhenEmpty());
-        }
-    }
-
-    private IEnumerator DestroyWhenEmpty()
-    {
-        if (destroyWhenEmpty)
-        {
-            while (darkSmokeParticle.particleCount > 0)
-            {
-                yield return null; 
-            }
-
-            Destroy(darkSmokeParticle.gameObject);
-        }
-        else
-        {
-            darkSmokeParticle.gameObject.SetActive(false);
-        }
+        Destroy(darkSmokeParticle.gameObject);
     }
 }
