@@ -188,10 +188,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dffbbfd8507c5b04ca03f5d01531afef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  messageBox: {fileID: 0}
   amount: 20
   skillEffect: {fileID: 11400000, guid: 500b4e33632159f4480013b978e571d3, type: 2}
   rotationAmount: {x: 0, y: 0, z: 15}
+  positionAmount: 0
   emptyObject: {fileID: 1233719036620202841}
+  originalPosition: {x: 0, y: 0, z: 0}
+  icon: {fileID: 0}
+  text: {fileID: 0}
 --- !u!1 &6557456070987798007
 GameObject:
   m_ObjectHideFlags: 0

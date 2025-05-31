@@ -154,6 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c20fce4ed25bb42a0d0354e27c77ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <isDamagable>k__BackingField: 0
+  darknessAmount: 0
 --- !u!135 &217097306
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -939,7 +941,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 1161640551}
+    TrackingTarget: {fileID: 0}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -1061,11 +1063,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1161640551 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1157530024639077245, guid: 0a29b6368bffaeb49a3c16d3d472b5d2, type: 3}
-  m_PrefabInstance: {fileID: 2094727938445537052}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1210997057
 GameObject:
   m_ObjectHideFlags: 0
