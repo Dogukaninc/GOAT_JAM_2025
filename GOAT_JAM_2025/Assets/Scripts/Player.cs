@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using _Main.Scripts.AI.Enemy.Controllers;
 using _Main.Scripts.Interface;
 using UnityEngine;
@@ -14,6 +16,10 @@ public class Player : MonoBehaviour, IDieable
 
     [SerializeField] private Vector3 holdPos;
     [SerializeField] private Vector3 unholdPos;
+
+    [Header("Weapon Settings")] [SerializeField]
+    private float reloadTime = 1f;
+    public Transform mouseTargetPos;
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -70,6 +76,7 @@ public class Player : MonoBehaviour, IDieable
 
         if (groundPlane.Raycast(ray, out rayDistance))
         {
+            mouseTargetPos.position = ray.GetPoint(rayDistance);
             return ray.GetPoint(rayDistance);
         }
 
@@ -123,6 +130,7 @@ public class Player : MonoBehaviour, IDieable
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
         HoldLantern();
     }
+
     private void OnLanternActionCanceled(InputAction.CallbackContext context)
     {
         isLanternButtonHeld = false;
@@ -143,10 +151,18 @@ public class Player : MonoBehaviour, IDieable
 
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
+        if (weaponMuzzle.transform.childCount <= 0) return;
+
         GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
         croosBowAnimator.SetTrigger("Shoot");
         oldBullet.transform.parent = null;
         oldBullet.GetComponent<Bullet>().Thrown();
+        StartCoroutine(ArrowReloadDelay());
+    }
+
+    IEnumerator ArrowReloadDelay()
+    {
+        yield return new WaitForSeconds(reloadTime);
         GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
         shootBullet.transform.SetParent(weaponMuzzle.transform);
     }
