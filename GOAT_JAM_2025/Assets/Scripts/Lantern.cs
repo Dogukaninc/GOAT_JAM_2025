@@ -1,7 +1,5 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Lantern : MonoBehaviour
@@ -54,11 +52,6 @@ public class Lantern : MonoBehaviour
             if (_sliderTween != null && _sliderTween.IsActive()) _sliderTween.Kill();
             _sliderTween = DOVirtual.Float(lanternChargeSlider.value, roundedHealth / maxLanternLightCharge, 0.3f, x => { lanternChargeSlider.value = x; });
         }
-    }
-
-    private void UpdateSlider()
-    {
-        lanternChargeSlider.value = lanternLightCharge / maxLanternLightCharge;
     }
 
     public void OnLanternOn()
