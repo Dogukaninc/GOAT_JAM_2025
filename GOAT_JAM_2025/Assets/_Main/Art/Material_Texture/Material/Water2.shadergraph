@@ -1955,7 +1955,7 @@
     "m_ObjectId": "4c0082dfa02247c38f7f6b18269c5d4f",
     "m_Title": "Water Color",
     "m_Position": {
-        "x": -987.33349609375,
+        "x": -987.333251953125,
         "y": 147.3333740234375
     }
 }
@@ -2274,7 +2274,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Smoothness",
     "m_StageCapability": 2,
-    "m_Value": 0.5,
+    "m_Value": 0.0,
     "m_DefaultValue": 0.5,
     "m_Labels": []
 }
@@ -2985,8 +2985,8 @@
     "m_ObjectId": "8f7501b3cf614f79a2b98073590115da",
     "m_Title": "WaterReflection",
     "m_Position": {
-        "x": -1952.666748046875,
-        "y": -772.6666870117188
+        "x": -1952.6666259765625,
+        "y": -772.6666259765625
     }
 }
 
