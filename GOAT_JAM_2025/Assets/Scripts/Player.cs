@@ -3,10 +3,17 @@ using _Main.Scripts.Interface;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Scripts.GeneralSystems;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour, IDieable
 {
     [field: SerializeField] public bool IsDead { get; set; }
+
+    [Header("Ik Arm Hold Settings")] [SerializeField]
+    private Transform leftHandGrip;
+
+    [SerializeField] private Vector3 holdPos;
+    [SerializeField] private Vector3 unholdPos;
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -14,7 +21,7 @@ public class Player : MonoBehaviour, IDieable
     [SerializeField] private float bulletSpeed = 10f;
 
     [SerializeField] private GameObject lantern;
-    [SerializeField] private GameObject magic;
+    [SerializeField] private GameObject weaponMuzzle;
     [SerializeField] private GameObject bullet;
 
     private PlayerAnimationHandler _playerAnimationHandler;
@@ -23,6 +30,7 @@ public class Player : MonoBehaviour, IDieable
     private float lanternRadius = 10f;
     private Camera mainCamera;
     private Animator animator;
+    public Animator croosBowAnimator;
     private CharacterController controller;
     private Vector3 movement;
     private Transform cameraTransform;
@@ -44,7 +52,7 @@ public class Player : MonoBehaviour, IDieable
         shootAction = playerInput.actions["Shoot"];
         lanternAction = playerInput.actions["Lantern"];
         lanternAction.started += OnLanternActionPerformed;
-        lanternAction.canceled += OnLanternActionPerformed;
+        lanternAction.canceled += OnLanternActionCanceled;
         shootAction.performed += OnShootActionPerformed;
     }
 
@@ -59,12 +67,12 @@ public class Player : MonoBehaviour, IDieable
         Ray ray = mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue());
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayDistance;
-        
+
         if (groundPlane.Raycast(ray, out rayDistance))
         {
             return ray.GetPoint(rayDistance);
         }
-        
+
         return transform.position;
     }
 
@@ -108,26 +116,43 @@ public class Player : MonoBehaviour, IDieable
         _playerAnimationHandler.AnimateMovement(moveDir);
     }
 
-    private void OnLanternActionPerformed(InputAction.CallbackContext context){
+    private void OnLanternActionPerformed(InputAction.CallbackContext context)
+    {
         isLanternButtonHeld = !isLanternButtonHeld;
         lantern.GetComponent<Lantern>().OnLanternOn();
         animator.SetBool("IsLanternOn", isLanternButtonHeld);
+        HoldLantern();
+    }
+    private void OnLanternActionCanceled(InputAction.CallbackContext context)
+    {
+        isLanternButtonHeld = false;
+        // lantern.GetComponent<Lantern>().OnLanternOff();
+        animator.SetBool("IsLanternOn", isLanternButtonHeld);
+        UnHoldLantern();
     }
 
+    private void HoldLantern()
+    {
+        leftHandGrip.transform.localPosition = Vector3.Lerp(leftHandGrip.transform.localPosition, holdPos, 0.5f);
+    }
+
+    private void UnHoldLantern()
+    {
+        leftHandGrip.transform.localPosition = Vector3.Lerp(leftHandGrip.transform.localPosition, unholdPos, 0.5f);
+    }
 
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
-        GameObject oldBullet = magic.transform.GetChild(0).gameObject;
-        animator.SetTrigger("Shoot");
+        GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
+        croosBowAnimator.SetTrigger("Shoot");
         oldBullet.transform.parent = null;
         oldBullet.GetComponent<Bullet>().Thrown();
-        GameObject shootBullet = Instantiate(bullet,magic.transform.position,magic.transform.rotation);
-        shootBullet.transform.SetParent(magic.transform);
-
-
+        GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
+        shootBullet.transform.SetParent(weaponMuzzle.transform);
     }
 
-    void OnDestroy(){
+    void OnDestroy()
+    {
         if (lanternAction != null)
         {
             lanternAction.started -= OnLanternActionPerformed;
@@ -138,10 +163,11 @@ public class Player : MonoBehaviour, IDieable
             shootAction.performed -= OnShootActionPerformed;
     }
 
-    public void OnDead(){
+    public void OnDead()
+    {
     }
 
-    public void OnRevive(){
+    public void OnRevive()
+    {
     }
-
 }
