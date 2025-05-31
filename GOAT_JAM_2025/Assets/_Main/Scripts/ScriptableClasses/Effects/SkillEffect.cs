@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public abstract class SkillEffect : ScriptableObject
 {
-    public string skillName{get; protected set;}
-    public string skillDescription{get; protected set;}
-    public Image skillIcon{get; protected set;}
+    public string skillName;
+    public string skillDescription;
+    public Sprite skillIcon;
 
     public abstract void ApplyEffect(float value);
 

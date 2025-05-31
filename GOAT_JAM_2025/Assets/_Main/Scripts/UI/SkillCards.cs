@@ -2,40 +2,47 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 public class SkillCards : MonoBehaviour
 {
+    [SerializeField] private GameObject messageBox;
     [SerializeField] private float amount;
     [SerializeField] private SkillEffect skillEffect;
     [SerializeField] private Vector3 rotationAmount;
     [SerializeField] private float positionAmount;
     [SerializeField] private GameObject emptyObject;
-    private RectTransform rectTransform;
     [SerializeField] private Vector3 originalPosition;
+    [SerializeField] private GameObject icon;
+    [SerializeField] private GameObject text;
+
+    private RectTransform rectTransform;
     private Vector3 originalRotation;
     private Vector3 originalCardHolderPosition;
     private GameObject cardHolder;
-
-    private void Awake()
-    {
-        rectTransform = GetComponent<RectTransform>();
-        cardHolder = rectTransform.parent.gameObject;
-
-    }
+    private Vector3 targetPosition;
 
     private void Start()
     {
+        icon.GetComponent<Image>().sprite = skillEffect.skillIcon;
+        text.GetComponent<TextMeshProUGUI>().text = skillEffect.skillName;
+        //CloseCharacterInput
+        rectTransform = GetComponent<RectTransform>();
+        cardHolder = rectTransform.parent.gameObject;
         originalCardHolderPosition = cardHolder.GetComponent<RectTransform>().position;
         originalPosition = rectTransform.position;
         originalRotation = rectTransform.rotation.eulerAngles;
-        rectTransform.DOAnchorPosY(rectTransform.position.y + positionAmount, 1f);
+        targetPosition = rectTransform.position + (rectTransform.up * positionAmount);
+        rectTransform.DOMove(targetPosition, 1f);
+
     }
 
     public void OnCursorEnter()
     {
         if (GeneralValuesHolder.Instance.SkillSelected) return;
         var seq = DOTween.Sequence();
-        seq.Append(rectTransform.DOScale(new Vector3(1.1f, 1.1f, 1.1f), 0.5f));
-        seq.Join(rectTransform.DORotate(originalRotation + rotationAmount, 0.5f));
+        seq.Append(rectTransform.DOScale(new Vector3(1f, 1f, 1f), 0.5f));
+        seq.Join(rectTransform.DOMove(targetPosition + rectTransform.up * 30, 0.5f));
+
     }
 
     public void OnCursorExit()
@@ -43,7 +50,7 @@ public class SkillCards : MonoBehaviour
         if (GeneralValuesHolder.Instance.SkillSelected) return;
         var seq = DOTween.Sequence();
         seq.Append(rectTransform.DOScale(new Vector3(1f, 1f, 1f), 0.5f));
-        seq.Join(rectTransform.DORotate(originalRotation, 0.5f));
+        seq.Join(rectTransform.DOMove(targetPosition, 0.5f));
     }
 
     public void OnCursorClick()
@@ -55,8 +62,7 @@ public class SkillCards : MonoBehaviour
     private IEnumerator OnCursorClickCoroutine()
     {
         GeneralValuesHolder.Instance.SkillSelected = true;
-        rectTransform.DOKill();
-        rectTransform.DOAnchorPosY(originalPosition.y + 300, 1);
+        rectTransform.DOLocalMoveY(originalPosition.y + 300, 1);
         rectTransform.DORotate(originalRotation + new Vector3(0, 180f, 0), 0.6f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.3f);
         emptyObject.SetActive(false);
@@ -66,9 +72,16 @@ public class SkillCards : MonoBehaviour
         emptyObject.SetActive(true);
         skillEffect.ApplyEffect(amount);
         yield return new WaitForSeconds(0.3f);
-        rectTransform.DOAnchorPosY(originalCardHolderPosition.y - 1200, 0.75f);
+        cardHolder.GetComponent<RectTransform>().DOAnchorPosY(originalCardHolderPosition.y - 1500, 0.75f);
         yield return new WaitForSeconds(0.75f);
+        messageBox.GetComponent<RectTransform>().GetChild(0).GetComponent<TextMeshProUGUI>().text = skillEffect.skillDescription;
+        messageBox.SetActive(true);
+        messageBox.GetComponent<RectTransform>().DOMove(new Vector3(Screen.width / 2, Screen.height / 2, 0f), 0.75f);
+    }
+
+    public void OnCloseButtonPressed () {
         Destroy(cardHolder);
+        //openCharacterInput
     }
 
 }
