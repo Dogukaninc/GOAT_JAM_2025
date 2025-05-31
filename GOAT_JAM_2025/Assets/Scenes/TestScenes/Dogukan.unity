@@ -891,8 +891,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 0.3315272, g: 0.4751719, b: 0.93962264, a: 1}
-  m_Intensity: 3.5
+  m_Color: {r: 0.47621924, g: 0.61286646, b: 0.735849, a: 1}
+  m_Intensity: 4.09
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -984,6 +984,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &1822416387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5777582256877188149, guid: 8a53c7e842f7cc6489580f49642d94cb, type: 3}
+  m_PrefabInstance: {fileID: 3892357994728633447}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1919734673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,6 +1278,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3972864919681213886, guid: 0a29b6368bffaeb49a3c16d3d472b5d2, type: 3}
+      propertyPath: lanternChargeSlider
+      value: 
+      objectReference: {fileID: 1822416387}
     - target: {fileID: 4747724965011111465, guid: 0a29b6368bffaeb49a3c16d3d472b5d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.16
@@ -1703,13 +1718,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 629926087535751226, guid: 9a3535c48e70f9243a00e45cb825cf25, type: 3}
-      propertyPath: darknessAmount
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 2690063213046899526, guid: 9a3535c48e70f9243a00e45cb825cf25, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.05
+      value: 5.03
       objectReference: {fileID: 0}
     - target: {fileID: 2690063213046899526, guid: 9a3535c48e70f9243a00e45cb825cf25, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1717,7 +1728,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2690063213046899526, guid: 9a3535c48e70f9243a00e45cb825cf25, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.22
+      value: -0.58
       objectReference: {fileID: 0}
     - target: {fileID: 2690063213046899526, guid: 9a3535c48e70f9243a00e45cb825cf25, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1747,10 +1758,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4920321014700857212, guid: 9a3535c48e70f9243a00e45cb825cf25, type: 3}
-      propertyPath: m_AngularSpeed
-      value: 800
-      objectReference: {fileID: 0}
     - target: {fileID: 6104995453650656520, guid: 9a3535c48e70f9243a00e45cb825cf25, type: 3}
       propertyPath: m_Name
       value: Enemy_Ai
@@ -1771,6 +1778,6 @@ SceneRoots:
   - {fileID: 1254846834659515210}
   - {fileID: 30494920}
   - {fileID: 1369136567}
-  - {fileID: 5549092267316637020}
   - {fileID: 1026238170}
   - {fileID: 1062018468039647551}
+  - {fileID: 5549092267316637020}

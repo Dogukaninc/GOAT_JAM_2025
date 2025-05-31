@@ -2523,6 +2523,10 @@ PrefabInstance:
       propertyPath: lanternLightCharge
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 7336642859037259158, guid: c2cf601a1e19f7b499d520035e27400f, type: 3}
+      propertyPath: chargeValueMultiplier
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7693713975988999347, guid: c2cf601a1e19f7b499d520035e27400f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0034718518
