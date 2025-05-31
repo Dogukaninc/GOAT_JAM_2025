@@ -19,13 +19,11 @@ namespace _Main.Scripts.AI.Enemy.Controllers
 
         public void PlayIdleClip()
         {
-            // animator.CrossFade(_idleClipName, 0.1f);
             animator.SetBool("isRunning", false);
         }
 
         public void PlayRunClip()
         {
-            // animator.CrossFade(_runClipName, 0.1f);
             animator.SetBool("isRunning", true);
         }
 
