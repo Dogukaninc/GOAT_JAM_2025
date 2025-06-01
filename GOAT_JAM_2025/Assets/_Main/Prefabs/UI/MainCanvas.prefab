@@ -72,7 +72,7 @@ MonoBehaviour:
   bottomPosY: -400
   _healthRect: {fileID: 377708174809285042}
   _playerDeadUIRect: {fileID: 3158058654147166165}
-  playerDeadUI: {fileID: 8969839949726290712}
+  _playerDeadUI: {fileID: 8969839949726290712}
 --- !u!114 &298408611362881230
 MonoBehaviour:
   m_ObjectHideFlags: 0
