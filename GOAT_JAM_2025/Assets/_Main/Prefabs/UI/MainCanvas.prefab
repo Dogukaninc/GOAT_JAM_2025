@@ -1849,7 +1849,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4274136387048985735, guid: 796ffe2ef015ce44b9649c77ea9a206a, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1000
+      value: 1027
       objectReference: {fileID: 0}
     - target: {fileID: 4274136387048985735, guid: 796ffe2ef015ce44b9649c77ea9a206a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2158,18 +2158,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CursorCrosshair
       objectReference: {fileID: 0}
-    - target: {fileID: 4008939684442758885, guid: 393dc9ec491a70e4dbe1dc10e7a1f830, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5274679193450519095, guid: 393dc9ec491a70e4dbe1dc10e7a1f830, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8203981280527640052, guid: 393dc9ec491a70e4dbe1dc10e7a1f830, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 8337726000571707686, guid: 393dc9ec491a70e4dbe1dc10e7a1f830, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2249,10 +2237,6 @@ PrefabInstance:
     - target: {fileID: 8337726000571707686, guid: 393dc9ec491a70e4dbe1dc10e7a1f830, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8952549961045097417, guid: 393dc9ec491a70e4dbe1dc10e7a1f830, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2387,6 +2371,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 300136208692482084}
     m_Modifications:
+    - target: {fileID: 1616320656851250188, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1616320656851250188, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7976892397648562353, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2470,6 +2462,14 @@ PrefabInstance:
     - target: {fileID: 8661985693853064127, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
       propertyPath: m_Name
       value: PlayerStatsUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706503350680972813, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706503350680972813, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
