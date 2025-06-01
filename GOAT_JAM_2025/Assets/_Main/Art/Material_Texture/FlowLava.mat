@@ -46,9 +46,9 @@ Material:
     - _Voronoidandle: 51.72
     - _Voronoiddensity: 8.5
     m_Colors:
-    - _Layer1Color: {r: 1, g: 0.8734177, b: 0, a: 0}
+    - _Layer1Color: {r: 1, g: 0.11195337, b: 0, a: 0}
     - _Layer1Speed: {r: 0.1, g: 0, b: 0, a: 0}
-    - _Layer2Color: {r: 6.9937105, g: 4.02618, b: 0.54981846, a: 0}
+    - _Layer2Color: {r: 6.9937105, g: 3.0262294, b: 0.58586043, a: 0}
     - _Layer2Speed: {r: 0.2, g: 0.2, b: 0, a: 0}
     - _OutlineColor: {r: 5.992155, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

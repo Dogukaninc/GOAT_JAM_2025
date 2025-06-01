@@ -65,7 +65,7 @@ MonoBehaviour:
   _pausePanelTweenDuration: 0.5
   topPosY: 970
   middlePosY: 0
-  _playerStatsUI: {fileID: 0}
+  _playerStatsUI: {fileID: 1421994893487575740}
   healthPosY: 0
   bottomPosY: -400
   _healthRect: {fileID: 377708174809285042}
@@ -1751,6 +1751,11 @@ PrefabInstance:
 --- !u!224 &377708174809285042 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7976892397648562353, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
+  m_PrefabInstance: {fileID: 7750271415758063875}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1421994893487575740 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8661985693853064127, guid: a9633e51e885f6d459035a5f66ea4404, type: 3}
   m_PrefabInstance: {fileID: 7750271415758063875}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8411479544781898520

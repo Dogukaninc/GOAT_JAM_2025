@@ -1,6 +1,8 @@
 using _Main.Scripts.AI.Enemy.Controllers;
 using _Main.Scripts.Interface;
 using _Main.Scripts.ScriptableClasses;
+using DG.Tweening;
+using Main._Project.Scripts.Utilities.Pool;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,9 +30,25 @@ public class EnemyController : MonoBehaviour, IDieable
     public void OnDead()
     {
         gameObject.SetActive(false);
+        SpreadLightSeams();
     }
 
     public void OnRevive()
     {
+    }
+
+    private void SpreadLightSeams()
+    {
+        for (int i = 0; i < EnemySo.lightSeamCount; i++)
+        {
+            var seam = PoolSystem.Instance.SpawnGameObject("LightSeam");
+            seam.transform.DOJump(SelectRandomPos(), 2, 1, 0.5f).SetEase(Ease.OutQuad);
+        }
+    }
+
+    private Vector3 SelectRandomPos()
+    {
+        var randomPos = new Vector3(Random.Range(-3, 3), transform.position.y, Random.Range(-3, 3));
+        return transform.position + randomPos;
     }
 }
