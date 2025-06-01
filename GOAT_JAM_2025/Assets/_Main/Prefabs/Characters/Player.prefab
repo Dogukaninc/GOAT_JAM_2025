@@ -1706,7 +1706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4cb5dfa0e2015f43b423024acf4044e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
   speed: 20
   lifespan: 4
 --- !u!54 &2013405620476632106
@@ -2331,6 +2330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55beddf913f11544b918e827b84c8ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LightSeams: []
   <IsDead>k__BackingField: 0
   leftHandGrip: {fileID: 8663746196939253198}
   holdPos: {x: -3.16, y: 1.122695, z: 1.012}
@@ -2346,6 +2346,7 @@ MonoBehaviour:
   weaponMuzzle: {fileID: 5434722763974890171}
   bullet: {fileID: 5323350546604515559, guid: d8d12ffdf49f59f46aef9573aa224da2, type: 3}
   croosBowAnimator: {fileID: 2038347590708702484}
+  _playerDeadEvent: {fileID: 11400000, guid: c42272c118929ce409657cc3337f50fd, type: 2}
 --- !u!114 &7899453185423187058
 MonoBehaviour:
   m_ObjectHideFlags: 0
