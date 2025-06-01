@@ -53,5 +53,8 @@ namespace Assets._Scripts.Enemy
         private bool IsPlayerFarAway() =>
             Vector3.Distance(_enemyController.transform.position, GeneralValuesHolder.Instance.Player.transform.position) >
             _enemyController.StoppingDistance;
+        private bool IsCloseEnough()=>
+            Vector3.Distance(transform.position, GeneralValuesHolder.Instance.Player.transform.position) <=
+            _enemyController.StoppingDistance;
     }
 }

@@ -242,6 +242,7 @@ public class Player : MonoBehaviour, IDieable
 
     public void OnDead()
     {
+        IsDead = true;
         _playerDeadEvent.Raise(this, null);
     }
 

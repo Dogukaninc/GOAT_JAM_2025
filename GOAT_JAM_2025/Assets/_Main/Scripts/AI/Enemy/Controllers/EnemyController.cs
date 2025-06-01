@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour, IDieable
     public EnemyAnimationHandler EnemyAnimationHandler { get; private set; }
     public NavMeshAgent NavMeshAgent { get; set; }
     public bool isReadyToMove; //TODO-> Bu flag sadece ai'ı başlangıçta koşullandırmak için kullanılan bir debug.
+    public ParticleSystem particleSystem;
 
     private void Awake()
     {
@@ -30,18 +31,20 @@ public class EnemyController : MonoBehaviour, IDieable
 
     public void OnDead()
     {
+        particleSystem.Play();
         StartCoroutine(death());
     }
 
     private IEnumerator death()
     {
+        yield return new WaitForSeconds(0.5f);
         EnemyAnimationHandler.PlayDeathClip();
         this.NavMeshAgent.enabled = false;
         yield return new WaitForSeconds(1);
         gameObject.SetActive(false);
         SpreadLightSeams();
     }
-    
+
     public void OnRevive()
     {
     }

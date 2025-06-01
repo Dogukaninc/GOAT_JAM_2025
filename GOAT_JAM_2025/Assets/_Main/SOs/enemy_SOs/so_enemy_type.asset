@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: so_enemy_type
   m_EditorClassIdentifier: 
   stoppingDistance: 2
-  damage: 10
+  damage: 20
   attackCooldown: 2
   lightSeamCount: 2

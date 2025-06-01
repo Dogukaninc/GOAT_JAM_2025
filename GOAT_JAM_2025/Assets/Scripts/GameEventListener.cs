@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEngine.EventSystems.EventTrigger;
 
 [System.Serializable]
 public class CustomGameEvent : UnityEvent<Component, object> { }

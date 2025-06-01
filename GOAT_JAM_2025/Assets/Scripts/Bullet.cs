@@ -8,19 +8,24 @@ public class Bullet : MonoBehaviour
     private float damage;
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifespan = 4f;
+    public bool isThrown;
 
     private void Start()
     {
         damage = GeneralValuesHolder.Instance.playerDamage;
     }
+
     public void Thrown()
     {
+        isThrown = true;
         GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.Impulse);
         Destroy(gameObject, lifespan);
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!isThrown) return;
+
         if (other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<EnemyCleanse>().isDamagable)
         {
             var iDieable = other.gameObject.GetComponent<IDieable>();
