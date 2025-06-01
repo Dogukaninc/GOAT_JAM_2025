@@ -32,8 +32,9 @@ public class EnemySpawner : MonoBehaviour
         while (spawnedEnemies <= numberOfEnemies[currentStage])
         {
             Transform spawnTarget = transform.GetChild(currentStage).transform.GetChild(Random.Range(0, transform.GetChild(currentStage).transform.childCount));
-            Instantiate(vfx, spawnTarget.position,spawnTarget.rotation);
+            GameObject x = Instantiate(vfx, spawnTarget.position,spawnTarget.rotation);
             yield return new WaitForSeconds(2);
+            Destroy(x);
             Instantiate(enemy,spawnTarget.position,spawnTarget.rotation);
             spawnedEnemies++;
             yield return new WaitForSeconds(Random.Range(1f,4f));
