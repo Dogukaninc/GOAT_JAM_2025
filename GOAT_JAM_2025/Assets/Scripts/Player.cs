@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using _Main.Scripts.AI.Enemy.Controllers;
 using _Main.Scripts.Interface;
-using _Main.Scripts.Props;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IDieable
 {
-    public List<LightSeam> LightSeams;
+    public List<GameObject> LightSeams;
 
     [field: SerializeField] public bool IsDead { get; set; }
 
@@ -46,12 +46,17 @@ public class Player : MonoBehaviour, IDieable
     private Vector3 movement;
     private Transform cameraTransform;
     private PlayerInput playerInput;
+
     private InputAction moveAction;
-    private InputAction shootAction;
+
+    // private InputAction shootAction;
     private InputAction lanternAction;
     private bool isLanternOn;
     private bool isLanternButtonHeld;
     private Vector3 moveDir;
+    private bool isAllowedToShoot;
+    [SerializeField] private float shootDelay = 1f;
+    private float shootDefaultDelay = 1f;
 
     void Awake()
     {
@@ -60,17 +65,18 @@ public class Player : MonoBehaviour, IDieable
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["Move"];
-        shootAction = playerInput.actions["Shoot"];
+        // shootAction = playerInput.actions["Shoot"];
         lanternAction = playerInput.actions["Lantern"];
         lanternAction.started += OnLanternActionPerformed;
         lanternAction.canceled += OnLanternActionCanceled;
-        shootAction.performed += OnShootActionPerformed;
+        // shootAction.performed += OnShootActionPerformed;
     }
 
     void Start()
     {
         mainCamera = Camera.main;
         cameraTransform = mainCamera.transform;
+        shootDefaultDelay = shootDelay;
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -126,6 +132,33 @@ public class Player : MonoBehaviour, IDieable
         }
 
         _playerAnimationHandler.AnimateMovement(moveDir);
+
+        Shoot();
+    }
+
+    private void Shoot()
+    {
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            isAllowedToShoot = true;
+            shootDelay = shootDefaultDelay;
+            OnShootActionPerformed();       
+        }
+        else if (Mouse.current.leftButton.wasReleasedThisFrame)
+        {
+            isAllowedToShoot = false;
+            shootDelay = shootDefaultDelay;
+        }
+
+        if (isAllowedToShoot)
+        {
+            shootDelay -= Time.deltaTime;
+            if (shootDelay <= 0f)
+            {
+                shootDelay = shootDefaultDelay;
+                OnShootActionPerformed();
+            }
+        }
     }
 
     private void OnLanternActionPerformed(InputAction.CallbackContext context)
@@ -156,26 +189,15 @@ public class Player : MonoBehaviour, IDieable
         leftHandGrip.transform.localPosition = Vector3.Lerp(leftHandGrip.transform.localPosition, unholdPos, 0.5f);
     }
 
-    private void OnShootActionPerformed(InputAction.CallbackContext context)
+    private void OnShootActionPerformed()
     {
-        if (weaponMuzzle.transform.childCount <= 0)
-        {
-            //GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
-            //shootBullet.transform.SetParent(weaponMuzzle.transform);
-            
-            GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
-            croosBowAnimator.SetTrigger("Shoot");
-            oldBullet.transform.parent = null;
-            oldBullet.GetComponent<Bullet>().Thrown();
-        }
-        else
-        {
-            GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
-            croosBowAnimator.SetTrigger("Shoot");
-            oldBullet.transform.parent = null;
-            oldBullet.GetComponent<Bullet>().Thrown();
-            StartCoroutine(ArrowReloadDelay());
-        }
+        if (weaponMuzzle.transform.childCount <= 0) return;
+
+        GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
+        croosBowAnimator.SetTrigger("Shoot");
+        oldBullet.transform.parent = null;
+        oldBullet.GetComponent<Bullet>().Thrown();
+        StartCoroutine(ArrowReloadDelay());
     }
 
     IEnumerator ArrowReloadDelay()
@@ -193,8 +215,8 @@ public class Player : MonoBehaviour, IDieable
             lanternAction.canceled -= OnLanternActionPerformed;
         }
 
-        if (shootAction != null)
-            shootAction.performed -= OnShootActionPerformed;
+        // if (shootAction != null)
+        // shootAction.performed -= OnShootActionPerformed;
     }
 
     public void OnDead()

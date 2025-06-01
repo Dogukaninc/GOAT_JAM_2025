@@ -41,6 +41,11 @@ public class Lantern : MonoBehaviour
             lanternLightCharge += Time.deltaTime * chargeValueMultiplier;
             UpdateLanternUI();
         }
+
+        if (lanternLightCharge <= 0)
+        {
+            OnLanternOff();
+        }
     }
     
     public void UpdateLanternUI()
