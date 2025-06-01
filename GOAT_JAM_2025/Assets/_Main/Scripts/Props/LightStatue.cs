@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
 using _Main.Scripts.Interface;
-using _Main.Scripts.Props;
 using DG.Tweening;
 using UnityEngine;
 
 public class LightStatue : MonoBehaviour, IInteractable
 {
-    public List<LightSeam> lightSeams;
+    public List<GameObject> lightSeams;
     public int lightSeamCountToPassLevel;
     public GameObject interactionInfoPanel;
     public bool isNowInteractable;
@@ -42,7 +40,7 @@ public class LightStatue : MonoBehaviour, IInteractable
                     seam.gameObject.SetActive(true);
                     seam.transform.DOJump(transform.position, 1, 1, 1).SetEase(Ease.InQuad).OnComplete(() =>
                     {
-                        AddSeamToStatue(seam);
+                        // AddSeamToStatue(seam);
                         _player.LightSeams.Remove(seam);
                     });
 
@@ -61,13 +59,5 @@ public class LightStatue : MonoBehaviour, IInteractable
     {
         interactionInfoPanel.SetActive(false);
         isNowInteractable = false;
-    }
-
-    public void AddSeamToStatue(LightSeam seam)
-    {
-        if (lightSeams.Count < lightSeamCountToPassLevel)
-        {
-            lightSeams.Add(seam);
-        }
     }
 }
