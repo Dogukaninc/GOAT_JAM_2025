@@ -37,6 +37,7 @@ public class Player : MonoBehaviour, IDieable
     [SerializeField] private GameObject lantern;
     [SerializeField] private GameObject weaponMuzzle;
     [SerializeField] private GameObject bullet;
+    
 
     private PlayerAnimationHandler _playerAnimationHandler;
     private float verticalVelocity;
@@ -102,8 +103,8 @@ public class Player : MonoBehaviour, IDieable
 
     void Update()
     {
-        // Handle movement input
-        Vector2 input = moveAction.ReadValue<Vector2>();
+            // Handle movement input
+            Vector2 input = moveAction.ReadValue<Vector2>();
         movement = new Vector3(input.x, 0f, input.y).normalized;
 
         // Gravity
@@ -215,10 +216,7 @@ public class Player : MonoBehaviour, IDieable
             oldBullet.GetComponent<Bullet>().Thrown();
             StartCoroutine(ArrowReloadDelay());
         }
-        else
-        {
-            StartCoroutine(ArrowBugFix());
-        }
+
     }
 
     IEnumerator ArrowReloadDelay()
@@ -226,15 +224,8 @@ public class Player : MonoBehaviour, IDieable
         yield return new WaitForSeconds(reloadTime);
         GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
         shootBullet.transform.SetParent(weaponMuzzle.transform);
-    }
-    IEnumerator ArrowBugFix()
-    {
-        yield return new WaitForSeconds(reloadTime + 0.1f);
-        if (weaponMuzzle.transform.childCount == 0)
-        {
-            GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
-            shootBullet.transform.SetParent(weaponMuzzle.transform);
-        }
+        if (weaponMuzzle.transform.childCount > 1)
+            Destroy(weaponMuzzle.transform.GetChild(0).gameObject);
     }
 
     void OnDestroy()
