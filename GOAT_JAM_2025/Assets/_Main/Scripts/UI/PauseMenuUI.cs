@@ -80,8 +80,6 @@ public class PauseMenuUI : MonoBehaviour
     {
          _healthRect.DOAnchorPosY(healthPosY, _pausePanelTweenDuration);
         _playerStatsUI.SetActive(true);
-       
-
     }
 
     public void ClosePlayerStats()
@@ -90,12 +88,5 @@ public class PauseMenuUI : MonoBehaviour
         {
             _playerStatsUI.SetActive(false);
         });
-
-
     }
-
-
-
-
-
 }

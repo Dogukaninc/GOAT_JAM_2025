@@ -50,7 +50,7 @@ namespace Scripts.GeneralSystems
             if (damageTextTransform != null)
             {
                 var damageText = PoolSystem.Instance.SpawnGameObject("DamageText");
-                damageText.GetComponent<DamageText>().SetText(damageTextTransform.position, damage.ToString(), isCrit, isRandomizePos);
+                damageText.GetComponent<DamageText>().SetText(damageTextTransform.position + new Vector3(0, 1.5f, 0), damage.ToString(), isCrit, isRandomizePos);
             }
 
             UpdateHealthUI();

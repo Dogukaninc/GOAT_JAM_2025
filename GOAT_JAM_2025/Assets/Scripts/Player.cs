@@ -1,11 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using _Main.Scripts.AI.Enemy.Controllers;
 using _Main.Scripts.Interface;
+using _Main.Scripts.Props;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IDieable
 {
+    public List<LightSeam> LightSeams;
+
     [field: SerializeField] public bool IsDead { get; set; }
 
     [Header("Ik Arm Hold Settings")] [SerializeField]
@@ -21,7 +25,6 @@ public class Player : MonoBehaviour, IDieable
 
     [Header("Lantern Settings")] [SerializeField]
     private MeshRenderer lanternMesh;
-
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float turnSmoothTime = 0.1f;
@@ -155,13 +158,24 @@ public class Player : MonoBehaviour, IDieable
 
     private void OnShootActionPerformed(InputAction.CallbackContext context)
     {
-        if (weaponMuzzle.transform.childCount <= 0) return;
-
-        GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
-        croosBowAnimator.SetTrigger("Shoot");
-        oldBullet.transform.parent = null;
-        oldBullet.GetComponent<Bullet>().Thrown();
-        StartCoroutine(ArrowReloadDelay());
+        if (weaponMuzzle.transform.childCount <= 0)
+        {
+            GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
+            shootBullet.transform.SetParent(weaponMuzzle.transform);
+            
+            GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
+            croosBowAnimator.SetTrigger("Shoot");
+            oldBullet.transform.parent = null;
+            oldBullet.GetComponent<Bullet>().Thrown();
+        }
+        else
+        {
+            GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
+            croosBowAnimator.SetTrigger("Shoot");
+            oldBullet.transform.parent = null;
+            oldBullet.GetComponent<Bullet>().Thrown();
+            StartCoroutine(ArrowReloadDelay());
+        }
     }
 
     IEnumerator ArrowReloadDelay()

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemyCleanse : MonoBehaviour
@@ -52,11 +51,11 @@ public class EnemyCleanse : MonoBehaviour
         float newRate = initialEmissionRate * normalized;
         emissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(newRate);
 
-        if (!isFading)
-        {
-            isFading = true;
-            darkSmokeParticle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-        }
+        // if (!isFading)
+        // {
+        //     isFading = true;
+        //     darkSmokeParticle.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+        // }
 
         if (darknessAmount <= 0f)
         {

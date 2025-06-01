@@ -58,7 +58,7 @@ public class Lantern : MonoBehaviour
     {
         if (lanternLightCharge <= 0) return;
 
-        collider.enabled = !collider.enabled;
+        collider.enabled = true;
         light.enabled = true;
         lanternAnimator.SetBool("isLightOn", true);
         isLanternOn = true;
@@ -66,6 +66,7 @@ public class Lantern : MonoBehaviour
 
     public void OnLanternOff()
     {
+        collider.enabled = false;
         light.enabled = false;
         lanternAnimator.SetBool("isLightOn", false);
         isLanternOn = false;
