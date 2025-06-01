@@ -11,7 +11,8 @@ namespace DefaultNamespace
         public GameObject doorLock;
         public ParticleSystem doorEffect;
         public bool isLevelFinished = false;
-
+        public int desiredLightCount = 5;
+        
         public void OpenDoorLock(Component sender,object args)
         {
             doorEffect.Play();

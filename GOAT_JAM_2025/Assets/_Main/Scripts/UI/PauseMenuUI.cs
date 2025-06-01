@@ -92,6 +92,9 @@ public class PauseMenuUI : MonoBehaviour
         _cursorCross.SetActive(false);
         _isPaused = true;
         Cursor.visible = true;
-        _playerDeadUIRect.DOAnchorPosY(middlePosY, _pausePanelTweenDuration);
+        _playerDeadUIRect.DOAnchorPosY(middlePosY, _pausePanelTweenDuration).OnComplete(() =>
+        {
+            Time.timeScale = 0;
+        });
     }
 }

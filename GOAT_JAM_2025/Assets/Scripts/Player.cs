@@ -11,7 +11,6 @@ public class Player : MonoBehaviour, IDieable
     public List<GameObject> LightSeams;
 
     [field: SerializeField] public bool IsDead { get; set; }
-
     [Header("Ik Arm Hold Settings")]
     [SerializeField]
     private Transform leftHandGrip;
@@ -84,6 +83,11 @@ public class Player : MonoBehaviour, IDieable
         mainCamera = Camera.main;
         cameraTransform = mainCamera.transform;
         shootDefaultDelay = shootDelay;
+    }
+
+    public void ResetLightSeamCount()
+    {
+        LightSeams.Clear();
     }
 
     private Vector3 GetMouseWorldPosition()
@@ -244,6 +248,7 @@ public class Player : MonoBehaviour, IDieable
     {
         IsDead = true;
         _playerDeadEvent.Raise(this, null);
+        this.enabled = false;
     }
 
     public void OnRevive()

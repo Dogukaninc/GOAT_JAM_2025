@@ -24,6 +24,8 @@ namespace Scripts.AI.Enemy.States
         {
             _player = GeneralValuesHolder.Instance.Player;
             _attackDefaultTime = _attackCooldown;
+            _enemyController.EnemyAnimationHandler.PlayIdleClip();
+            _attackCooldown = 0;
         }
 
         public void Tick()

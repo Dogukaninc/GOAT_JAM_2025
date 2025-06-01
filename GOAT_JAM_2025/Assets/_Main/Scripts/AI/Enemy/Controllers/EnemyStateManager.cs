@@ -32,7 +32,7 @@ namespace Assets._Scripts.Enemy
 
             Func<bool> isPlayerFar = () => !IsPlayerDead() && IsPlayerFarAway() && _enemyController.isReadyToMove;
             Func<bool> isNoTarget = () => IsPlayerDead() || !_enemyController.isReadyToMove;
-            Func<bool> isReadyToAttack = () => !IsPlayerDead() && !IsPlayerFarAway() && _enemyController.isReadyToMove;
+            Func<bool> isReadyToAttack = () => !IsPlayerDead() && IsCloseEnough() && _enemyController.isReadyToMove;
 
             _stateMachine.AddAnyTransition(moveToTargetState, isPlayerFar);
             _stateMachine.AddAnyTransition(idleState, isNoTarget);
