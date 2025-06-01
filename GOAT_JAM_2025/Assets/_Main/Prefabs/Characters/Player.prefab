@@ -2257,7 +2257,7 @@ GameObject:
   - component: {fileID: 653090411819500228}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2347,6 +2347,7 @@ MonoBehaviour:
   bullet: {fileID: 5323350546604515559, guid: d8d12ffdf49f59f46aef9573aa224da2, type: 3}
   croosBowAnimator: {fileID: 2038347590708702484}
   shootDelay: 2
+  _playerDeadEvent: {fileID: 11400000, guid: c42272c118929ce409657cc3337f50fd, type: 2}
 --- !u!114 &7899453185423187058
 MonoBehaviour:
   m_ObjectHideFlags: 0

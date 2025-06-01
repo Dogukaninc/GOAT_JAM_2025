@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifespan = 4f;
 
-    private void Awake()
+    private void Start()
     {
         damage = GeneralValuesHolder.Instance.playerDamage;
     }

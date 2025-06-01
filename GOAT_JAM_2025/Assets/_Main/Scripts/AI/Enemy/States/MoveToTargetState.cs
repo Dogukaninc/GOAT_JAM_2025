@@ -26,6 +26,7 @@ namespace Scripts.AI.Enemy.States
 
         public void Tick()
         {
+            if (!_agent.isActiveAndEnabled) return;
             if (_target != null)
             {
                 if (!IsCloseEnough())

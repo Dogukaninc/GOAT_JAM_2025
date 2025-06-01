@@ -136,6 +136,11 @@ public class Player : MonoBehaviour, IDieable
         _playerAnimationHandler.AnimateMovement(moveDir);
 
         Shoot();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            OnDead();
+        }
     }
 
     private void Shoot()
@@ -223,6 +228,7 @@ public class Player : MonoBehaviour, IDieable
         // shootAction.performed -= OnShootActionPerformed;
     }
 
+    
     public void OnDead()
     {
         _playerDeadEvent.Raise(this, null);

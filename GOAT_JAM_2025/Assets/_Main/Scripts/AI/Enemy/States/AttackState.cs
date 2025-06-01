@@ -1,4 +1,5 @@
-﻿using Scripts.AI.Base.Interfaces;
+﻿using _Main.Scripts.Interface;
+using Scripts.AI.Base.Interfaces;
 using Scripts.GeneralSystems;
 using UnityEngine;
 
@@ -44,7 +45,8 @@ namespace Scripts.AI.Enemy.States
         {
             if (_player.TryGetComponent(out Health playerHealth))
             {
-                playerHealth.TakeDamage(_damage);
+                var iDieable = _player.GetComponent<IDieable>();
+                playerHealth.TakeDamage(_damage, null, false, false, iDieable.OnDead);
                 _enemyController.EnemyAnimationHandler.PlayAttackClip();
             }
             else
