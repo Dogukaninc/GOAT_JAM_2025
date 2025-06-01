@@ -193,13 +193,15 @@ public class Player : MonoBehaviour, IDieable
 
     private void OnShootActionPerformed()
     {
-        if (weaponMuzzle.transform.childCount <= 0) return;
+        if (weaponMuzzle.transform.childCount > 0){
+            GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
+            croosBowAnimator.SetTrigger("Shoot");
+            oldBullet.transform.parent = null;
+            oldBullet.GetComponent<Bullet>().Thrown();
+            StartCoroutine(ArrowReloadDelay());
+        } 
 
-        GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
-        croosBowAnimator.SetTrigger("Shoot");
-        oldBullet.transform.parent = null;
-        oldBullet.GetComponent<Bullet>().Thrown();
-        StartCoroutine(ArrowReloadDelay());
+
     }
 
     IEnumerator ArrowReloadDelay()
