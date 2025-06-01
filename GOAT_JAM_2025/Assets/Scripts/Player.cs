@@ -12,18 +12,21 @@ public class Player : MonoBehaviour, IDieable
 
     [field: SerializeField] public bool IsDead { get; set; }
 
-    [Header("Ik Arm Hold Settings")] [SerializeField]
+    [Header("Ik Arm Hold Settings")]
+    [SerializeField]
     private Transform leftHandGrip;
 
     [SerializeField] private Vector3 holdPos;
     [SerializeField] private Vector3 unholdPos;
 
-    [Header("Weapon Settings")] [SerializeField]
+    [Header("Weapon Settings")]
+    [SerializeField]
     private float reloadTime = 1f;
 
     public Transform mouseTargetPos;
 
-    [Header("Lantern Settings")] [SerializeField]
+    [Header("Lantern Settings")]
+    [SerializeField]
     private MeshRenderer lanternMesh;
 
     [SerializeField] private float moveSpeed = 5f;
@@ -127,7 +130,7 @@ public class Player : MonoBehaviour, IDieable
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f);
             controller.Move((moveDir.normalized * moveSpeed + verticalMove) * Time.deltaTime);
-            
+
             walkTime -= Time.deltaTime;
             if (walkTime <= 0)
             {
@@ -141,7 +144,7 @@ public class Player : MonoBehaviour, IDieable
             controller.Move(verticalMove * Time.deltaTime);
         }
 
-       
+
 
         _playerAnimationHandler.AnimateMovement(moveDir);
 
@@ -212,6 +215,10 @@ public class Player : MonoBehaviour, IDieable
             oldBullet.GetComponent<Bullet>().Thrown();
             StartCoroutine(ArrowReloadDelay());
         }
+        else
+        {
+            StartCoroutine(ArrowBugFix());
+        }
     }
 
     IEnumerator ArrowReloadDelay()
@@ -219,6 +226,15 @@ public class Player : MonoBehaviour, IDieable
         yield return new WaitForSeconds(reloadTime);
         GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
         shootBullet.transform.SetParent(weaponMuzzle.transform);
+    }
+    IEnumerator ArrowBugFix()
+    {
+        yield return new WaitForSeconds(reloadTime + 0.1f);
+        if (weaponMuzzle.transform.childCount == 0)
+        {
+            GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
+            shootBullet.transform.SetParent(weaponMuzzle.transform);
+        }
     }
 
     void OnDestroy()
