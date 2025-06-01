@@ -40,9 +40,8 @@ public class EnemyController : MonoBehaviour, IDieable
         yield return new WaitForSeconds(1);
         gameObject.SetActive(false);
         SpreadLightSeams();
-
-
     }
+    
     public void OnRevive()
     {
     }
@@ -52,6 +51,7 @@ public class EnemyController : MonoBehaviour, IDieable
         for (int i = 0; i < EnemySo.lightSeamCount; i++)
         {
             var seam = PoolSystem.Instance.SpawnGameObject("LightSeam");
+            seam.transform.position = transform.position;
             seam.transform.DOJump(SelectRandomPos(), 2, 1, 0.5f).SetEase(Ease.OutQuad);
         }
     }

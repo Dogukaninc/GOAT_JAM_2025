@@ -136,11 +136,6 @@ public class Player : MonoBehaviour, IDieable
         _playerAnimationHandler.AnimateMovement(moveDir);
 
         Shoot();
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            OnDead();
-        }
     }
 
     private void Shoot()
@@ -205,8 +200,6 @@ public class Player : MonoBehaviour, IDieable
             oldBullet.GetComponent<Bullet>().Thrown();
             StartCoroutine(ArrowReloadDelay());
         } 
-
-
     }
 
     IEnumerator ArrowReloadDelay()
@@ -227,7 +220,6 @@ public class Player : MonoBehaviour, IDieable
         // if (shootAction != null)
         // shootAction.performed -= OnShootActionPerformed;
     }
-
     
     public void OnDead()
     {

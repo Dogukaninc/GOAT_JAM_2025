@@ -9,6 +9,7 @@ public class LightStatue : MonoBehaviour, IInteractable
     [SerializeField] private GameObject cardHolder;
     [SerializeField] private GameObject MainCanvas;
     [SerializeField] private GameEvent StageEnd;
+
     public List<GameObject> lightSeams;
     public int lightSeamCountToPassLevel;
     public GameObject interactionInfoPanel;
@@ -35,27 +36,24 @@ public class LightStatue : MonoBehaviour, IInteractable
         if (!isNowInteractable) return;
         if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-
-                if (_player.LightSeams.Count > 0)
+            if (_player.LightSeams.Count > 0)
+            {
+                var seam = _player.LightSeams[^1];
+                seam.gameObject.SetActive(true);
+                seam.transform.position = _player.transform.position;
+                seam.transform.DOJump(transform.position, 1, 1, 1).SetEase(Ease.InQuad).OnComplete(() =>
                 {
-                    var seam = _player.LightSeams[^1];
-                    seam.transform.position =_player.transform.position;
-                    seam.gameObject.SetActive(true);
+                    lightSeams.Add(seam);
+                    seam.SetActive(false);
                     _player.LightSeams.Remove(seam);
-                    seam.transform.DOJump(transform.position, 1, 1, 1).SetEase(Ease.InQuad).OnComplete(() =>
-                    {
-                        lightSeams.Add(seam);
-                        seam.SetActive(false);
-                    });
-
-                
+                });
             }
         }
 
         if (lightSeams.Count >= lightSeamCountToPassLevel)
         {
-            Instantiate(cardHolder,MainCanvas.transform);
-            StageEnd.Raise(this,null);
+            Instantiate(cardHolder, MainCanvas.transform);
+            StageEnd.Raise(this, null);
             this.enabled = false;
         }
     }
