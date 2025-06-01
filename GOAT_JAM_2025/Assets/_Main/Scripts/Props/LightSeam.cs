@@ -12,15 +12,14 @@ namespace _Main.Scripts.Props
         private void OnTriggerEnter(Collider other)
         {
             if(other.gameObject.tag == "Player") {
-                StartCoroutine(collect(other));
+                transform.DOJump(other.transform.position, 3f, 1, 0.5f).OnComplete(() =>
+                {
+                    other.GetComponent<Player>().LightSeams.Add(this.gameObject);
+                    gameObject.SetActive(false);
+                });
             }
         }
 
-        private IEnumerator collect(Collider other)
-        {
-            transform.DOJump(other.transform.position, 3f, 1, 0.5f).OnComplete(() => other.GetComponent<Player>().LightSeams.Add(this));
-            yield return new WaitForSeconds(0.5f);
-            gameObject.SetActive(false);
-        }
+
     }
 }
