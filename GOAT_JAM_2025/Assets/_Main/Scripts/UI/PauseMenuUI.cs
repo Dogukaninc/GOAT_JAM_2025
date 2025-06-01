@@ -15,8 +15,7 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private GameObject _playerStatsUI;
     [SerializeField] private float healthPosY, bottomPosY;
     [SerializeField] private RectTransform _healthRect;
-    [SerializeField] private RectTransform _playerDeadUIRect;
-    [SerializeField] private GameObject playerDeadUI;
+    [SerializeField] private GameObject _playerDeadUI;
     private void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -92,16 +91,22 @@ public class PauseMenuUI : MonoBehaviour
     }
 
 
-public void OpenPlayerDeadUI(Component sender, object data)
+public void OpenPlayerDeadUI()
 {
-    Debug.Log("OpenPlayerDeadUI");
-    playerDeadUI.SetActive(true);
+    _playerDeadUI.SetActive(true);
     _cursorCross.SetActive(false);
     _isPaused = true;
     Cursor.visible = true;
-    _playerDeadUIRect.DOAnchorPosY(middlePosY, _pausePanelTweenDuration);
+    _playerDeadUI.transform.DOAnchorPosY(middlePosY, _pausePanelTweenDuration);
 }
 
+public void ClosePlayerDeadUI()
+{
+    _playerDeadUI.transform.DOScale(bottomPosY, _pausePanelTweenDuration).OnComplete(() =>
+    {
+        _playerDeadUI.SetActive(false);
+    });
+}
 
 
 }
