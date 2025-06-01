@@ -199,7 +199,11 @@ public class Player : MonoBehaviour, IDieable
             oldBullet.transform.parent = null;
             oldBullet.GetComponent<Bullet>().Thrown();
             StartCoroutine(ArrowReloadDelay());
-        } 
+        }
+        else
+        {
+            StartCoroutine(ArrowBugFix());
+        }
     }
 
     IEnumerator ArrowReloadDelay()
@@ -207,6 +211,15 @@ public class Player : MonoBehaviour, IDieable
         yield return new WaitForSeconds(reloadTime);
         GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
         shootBullet.transform.SetParent(weaponMuzzle.transform);
+    }
+    IEnumerator ArrowBugFix()
+    {
+        yield return new WaitForSeconds(reloadTime+0.1f);
+        if(weaponMuzzle.transform.childCount == 0)
+        {
+            GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
+            shootBullet.transform.SetParent(weaponMuzzle.transform);
+        }
     }
 
     void OnDestroy()
