@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 782f338ba3d242747b18c8340f97e90f, type: 3}
-  m_Name: Crop_Plant
+  m_Name: StepSound
   m_EditorClassIdentifier: 
-  type: 11
-  clip: {fileID: 8300000, guid: 35f8de59ebbaa384fbeab73299bced09, type: 3}
-  volume: 0.2
-  useRandomPitch: 1
-  minPitch: 0.4
-  maxPitch: 0.5
-  interval: 0.2
+  type: 0
+  clip: {fileID: 8300000, guid: 39a8b2b689a37b647b88c24748224064, type: 3}
+  volume: 0.5
+  useRandomPitch: 0
+  minPitch: 1
+  maxPitch: 1
+  interval: 2

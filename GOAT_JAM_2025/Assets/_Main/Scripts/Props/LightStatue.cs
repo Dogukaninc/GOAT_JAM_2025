@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Main.Scripts.Interface;
+using DefaultNamespace;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,7 +10,8 @@ public class LightStatue : MonoBehaviour, IInteractable
     [SerializeField] private GameObject cardHolder;
     [SerializeField] private GameObject MainCanvas;
     [SerializeField] private GameEvent StageEnd;
-
+    [SerializeField] private Level levelOfStatue;
+    
     public List<GameObject> lightSeams;
     public int lightSeamCountToPassLevel;
     public GameObject interactionInfoPanel;
@@ -55,6 +57,7 @@ public class LightStatue : MonoBehaviour, IInteractable
             Instantiate(cardHolder, MainCanvas.transform);
             StageEnd.Raise(this, null);
             this.enabled = false;
+            levelOfStatue.isLevelFinished = true;
         }
     }
 
