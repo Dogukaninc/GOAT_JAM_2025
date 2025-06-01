@@ -17,11 +17,9 @@ public class Baphomet : MonoBehaviour
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        speechBubble = GetComponent<TextMeshProUGUI>();
     }
     private void Update()
     {
-        Debug.Log(Time.timeScale);
         if(speaking && Mouse.current.leftButton.wasPressedThisFrame) { 
             nextSpeech();
         }
@@ -30,11 +28,12 @@ public class Baphomet : MonoBehaviour
     }
     private void Start()
     {
-        onStageChange();
+        OnEnterNextStage();
     }
-    public void onStageChange()
+    public void OnEnterNextStage()
     {
         //stop character movement
+        speechBubble.text = speech[levelCount, speechCount];
         rectTransform.DOMoveX(rectTransform.position.x + Screen.width / 2, 0.5f).OnComplete(() =>Time.timeScale = 0);
         speaking = true;
         speechCount = 0;
@@ -51,7 +50,8 @@ public class Baphomet : MonoBehaviour
             //start character movement
             levelCount++;
             speaking = false;
-            rectTransform.DOMoveX(rectTransform.position.x - Screen.width / 2, 0.5f).OnComplete(() => Time.timeScale = 1);
+            Time.timeScale = 1;
+            rectTransform.DOMoveX(rectTransform.position.x - Screen.width / 2, 0.5f);
 
         }
     }

@@ -1,0 +1,42 @@
+using NUnit.Framework;
+using System.Collections;
+using UnityEngine;
+
+public class EnemySpawner : MonoBehaviour
+{
+    [SerializeField] private GameObject enemy;
+    [SerializeField] private int[] numberOfEnemies;
+    [SerializeField] private GameObject vfx;
+    private int currentStage = 0;
+    private int spawnedEnemies = 0;
+
+    private void Start()
+    {
+        onEnterNextStage();
+    }
+
+    public void onEnterNextStage()
+    {
+        StartCoroutine(SpawnEnemy()); 
+    }
+    
+    public void OnStageChange()
+    {
+        currentStage++;
+        spawnedEnemies = 0;
+    }
+
+    private IEnumerator SpawnEnemy()
+    {
+        yield return new WaitForSeconds(2);
+        while (spawnedEnemies <= numberOfEnemies[currentStage])
+        {
+            Transform spawnTarget = transform.GetChild(currentStage).transform.GetChild(Random.Range(0, transform.GetChild(currentStage).transform.childCount));
+            Instantiate(vfx, spawnTarget.position,spawnTarget.rotation);
+            yield return new WaitForSeconds(2);
+            Instantiate(enemy,spawnTarget.position,spawnTarget.rotation);
+            spawnedEnemies++;
+            yield return new WaitForSeconds(Random.Range(1f,4f));
+        }
+    }
+}
