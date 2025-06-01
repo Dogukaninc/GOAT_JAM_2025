@@ -4,10 +4,14 @@ using Scripts.GeneralSystems;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float damage = 10f;
+    private float damage;
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifespan = 4f;
 
+    private void Awake()
+    {
+        damage = GeneralValuesHolder.Instance.playerDamage;
+    }
     public void Thrown()
     {
         GetComponent<Rigidbody>().AddForce(transform.forward * speed, ForceMode.Impulse);

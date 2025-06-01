@@ -160,8 +160,8 @@ public class Player : MonoBehaviour, IDieable
     {
         if (weaponMuzzle.transform.childCount <= 0)
         {
-            GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
-            shootBullet.transform.SetParent(weaponMuzzle.transform);
+            //GameObject shootBullet = Instantiate(bullet, weaponMuzzle.transform.position, weaponMuzzle.transform.rotation);
+            //shootBullet.transform.SetParent(weaponMuzzle.transform);
             
             GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
             croosBowAnimator.SetTrigger("Shoot");
