@@ -1400,18 +1400,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Baphomet
       objectReference: {fileID: 0}
-    - target: {fileID: 1140907049734560506, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
-      propertyPath: m_Color.b
-      value: 0.4245283
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140907049734560506, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
-      propertyPath: m_Color.g
-      value: 0.4245283
-      objectReference: {fileID: 0}
-    - target: {fileID: 1140907049734560506, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
-      propertyPath: m_Color.r
-      value: 0.4245283
-      objectReference: {fileID: 0}
     - target: {fileID: 6043314235876615724, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1443,18 +1431,6 @@ PrefabInstance:
     - target: {fileID: 6043314235876615724, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6043314235876615724, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6043314235876615724, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 6043314235876615724, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6043314235876615724, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1503,10 +1479,6 @@ PrefabInstance:
     - target: {fileID: 6043314235876615724, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6373632911304886834, guid: 85b0e9045c76dd348a495df93c88b787, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 277
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
