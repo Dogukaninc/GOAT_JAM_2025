@@ -37,5 +37,10 @@ namespace _Main.Scripts.AI.Enemy.Controllers
             animator.SetBool("isRunning", false);
             animator.SetTrigger(_attackClipName);
         }
+
+        public void PlayDeathClip()
+        {
+            animator.SetBool("isDead", true);
+        }
     }
 }

@@ -1981,7 +1981,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -2346,7 +2346,7 @@ MonoBehaviour:
   weaponMuzzle: {fileID: 5434722763974890171}
   bullet: {fileID: 5323350546604515559, guid: d8d12ffdf49f59f46aef9573aa224da2, type: 3}
   croosBowAnimator: {fileID: 2038347590708702484}
-  _playerDeadEvent: {fileID: 11400000, guid: c42272c118929ce409657cc3337f50fd, type: 2}
+  shootDelay: 2
 --- !u!114 &7899453185423187058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2550,7 +2550,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7336642859037259158, guid: c2cf601a1e19f7b499d520035e27400f, type: 3}
       propertyPath: chargeValueMultiplier
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7693713975988999347, guid: c2cf601a1e19f7b499d520035e27400f, type: 3}
       propertyPath: m_LocalPosition.x
