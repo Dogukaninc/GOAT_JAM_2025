@@ -58,6 +58,8 @@ public class Player : MonoBehaviour, IDieable
     [SerializeField] private float shootDelay = 1f;
     private float shootDefaultDelay = 1f;
 
+    [SerializeField] private GameEvent _playerDeadEvent;
+
     void Awake()
     {
         _playerAnimationHandler = GetComponent<PlayerAnimationHandler>();
@@ -221,6 +223,7 @@ public class Player : MonoBehaviour, IDieable
 
     public void OnDead()
     {
+        _playerDeadEvent.Raise(this, null);
     }
 
     public void OnRevive()

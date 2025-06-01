@@ -3,6 +3,7 @@ using _Main.Scripts.Interface;
 using _Main.Scripts.ScriptableClasses;
 using DG.Tweening;
 using Main._Project.Scripts.Utilities.Pool;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,10 +30,19 @@ public class EnemyController : MonoBehaviour, IDieable
 
     public void OnDead()
     {
-        gameObject.SetActive(false);
-        SpreadLightSeams();
+        StartCoroutine(death());
     }
 
+    private IEnumerator death()
+    {
+        EnemyAnimationHandler.PlayDeathClip();
+        this.NavMeshAgent.enabled = false;
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
+        SpreadLightSeams();
+
+
+    }
     public void OnRevive()
     {
     }
