@@ -16,7 +16,8 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField] private float healthPosY, bottomPosY;
     [SerializeField] private RectTransform _healthRect;
     [SerializeField] private RectTransform _playerDeadUIRect;
-    [SerializeField] private GameObject playerDeadUI;
+    [SerializeField] private GameObject _playerDeadUI;
+
     private void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -58,10 +59,7 @@ public class PauseMenuUI : MonoBehaviour
         _cursorCross.SetActive(false);
         _isPaused = true;
         Cursor.visible = true;
-        _pausePanelRect.DOAnchorPosY(middlePosY, _pausePanelTweenDuration).OnComplete(() =>
-        {
-            Time.timeScale = 0f;
-        });
+        _pausePanelRect.DOAnchorPosY(middlePosY, _pausePanelTweenDuration).OnComplete(() => { Time.timeScale = 0f; });
     }
 
     public void PausePanelOutro()
@@ -79,29 +77,21 @@ public class PauseMenuUI : MonoBehaviour
 
     public void OpenPlayerStats()
     {
-         _healthRect.DOAnchorPosY(healthPosY, _pausePanelTweenDuration);
+        _healthRect.DOAnchorPosY(healthPosY, _pausePanelTweenDuration);
         _playerStatsUI.SetActive(true);
     }
 
     public void ClosePlayerStats()
     {
-        _healthRect.DOAnchorPosY(bottomPosY, _pausePanelTweenDuration).OnComplete(() =>
-        {
-            _playerStatsUI.SetActive(false);
-        });
+        _healthRect.DOAnchorPosY(bottomPosY, _pausePanelTweenDuration).OnComplete(() => { _playerStatsUI.SetActive(false); });
     }
 
-
-public void OpenPlayerDeadUI(Component sender, object data)
-{
-    Debug.Log("OpenPlayerDeadUI");
-    playerDeadUI.SetActive(true);
-    _cursorCross.SetActive(false);
-    _isPaused = true;
-    Cursor.visible = true;
-    _playerDeadUIRect.DOAnchorPosY(middlePosY, _pausePanelTweenDuration);
-}
-
-
-
+    public void OpenPlayerDeadUI()
+    {
+        _playerDeadUI.SetActive(true);
+        _cursorCross.SetActive(false);
+        _isPaused = true;
+        Cursor.visible = true;
+        _playerDeadUIRect.DOAnchorPosY(middlePosY, _pausePanelTweenDuration);
+    }
 }

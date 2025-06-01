@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using _Main.Scripts.AI.Enemy.Controllers;
 using _Main.Scripts.Interface;
+using _Space_Shooter_Files.Scripts;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IDieable
@@ -59,6 +59,7 @@ public class Player : MonoBehaviour, IDieable
     private float shootDefaultDelay = 1f;
 
     [SerializeField] private GameEvent _playerDeadEvent;
+    private float walkTime = 0.8f;
 
     void Awake()
     {
@@ -126,12 +127,21 @@ public class Player : MonoBehaviour, IDieable
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f);
             controller.Move((moveDir.normalized * moveSpeed + verticalMove) * Time.deltaTime);
+            
+            walkTime -= Time.deltaTime;
+            if (walkTime <= 0)
+            {
+                walkTime = 0.8f;
+                AudioManager.Instance.PlaySound("PlayerWalk");
+            }
         }
         else
         {
             Vector3 verticalMove = new Vector3(0f, verticalVelocity, 0f);
             controller.Move(verticalMove * Time.deltaTime);
         }
+
+       
 
         _playerAnimationHandler.AnimateMovement(moveDir);
 
@@ -144,7 +154,7 @@ public class Player : MonoBehaviour, IDieable
         {
             isAllowedToShoot = true;
             shootDelay = shootDefaultDelay;
-            OnShootActionPerformed();       
+            OnShootActionPerformed();
         }
         else if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
@@ -193,13 +203,15 @@ public class Player : MonoBehaviour, IDieable
 
     private void OnShootActionPerformed()
     {
-        if (weaponMuzzle.transform.childCount > 0){
+        if (weaponMuzzle.transform.childCount > 0)
+        {
+            AudioManager.Instance.PlaySound("CrossBow");
             GameObject oldBullet = weaponMuzzle.transform.GetChild(0).gameObject;
             croosBowAnimator.SetTrigger("Shoot");
             oldBullet.transform.parent = null;
             oldBullet.GetComponent<Bullet>().Thrown();
             StartCoroutine(ArrowReloadDelay());
-        } 
+        }
     }
 
     IEnumerator ArrowReloadDelay()
@@ -220,7 +232,7 @@ public class Player : MonoBehaviour, IDieable
         // if (shootAction != null)
         // shootAction.performed -= OnShootActionPerformed;
     }
-    
+
     public void OnDead()
     {
         _playerDeadEvent.Raise(this, null);

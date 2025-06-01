@@ -20,10 +20,11 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(SpawnEnemy()); 
     }
     
-    public void OnStageChange()
+    public void OnStageChange()//TODO: Yeni Levela geçerken çağır kapıda
     {
         currentStage++;
         spawnedEnemies = 0;
+        onEnterNextStage();
     }
 
     private IEnumerator SpawnEnemy()
