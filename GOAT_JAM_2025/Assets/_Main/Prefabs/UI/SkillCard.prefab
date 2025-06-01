@@ -343,8 +343,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: lorem ipsum lrem ipsum
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6370d83eb9bb51d4288b2abb1093cdb3, type: 2}
-  m_sharedMaterial: {fileID: -2286567526521617309, guid: 6370d83eb9bb51d4288b2abb1093cdb3, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 74498b731f62b0b4dbfdfc107b481edd, type: 2}
+  m_sharedMaterial: {fileID: 3342055441957482572, guid: 74498b731f62b0b4dbfdfc107b481edd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
+  m_fontSize: 21.3
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
