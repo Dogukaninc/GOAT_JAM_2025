@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using _Main.Scripts.Interface;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LightStatue : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameObject cardHolder;
+    [SerializeField] private GameObject MainCanvas;
     [SerializeField] private GameEvent StageEnd;
     public List<GameObject> lightSeams;
     public int lightSeamCountToPassLevel;
@@ -31,31 +33,30 @@ public class LightStatue : MonoBehaviour, IInteractable
     private void Update()
     {
         if (!isNowInteractable) return;
-        if (Input.GetKey(KeyCode.E))
+        if (Keyboard.current.eKey.wasPressedThisFrame)
         {
-            takeTime -= Time.deltaTime;
-            if (takeTime <= 0)
-            {
+
                 if (_player.LightSeams.Count > 0)
                 {
                     var seam = _player.LightSeams[^1];
+                    seam.transform.position =_player.transform.position;
                     seam.gameObject.SetActive(true);
+                    _player.LightSeams.Remove(seam);
                     seam.transform.DOJump(transform.position, 1, 1, 1).SetEase(Ease.InQuad).OnComplete(() =>
                     {
-                        _player.LightSeams.Remove(seam);
                         lightSeams.Add(seam);
                         seam.SetActive(false);
                     });
 
-                    Debug.Log("<color=red> Light Seam Taken From Player </color>");
-                }
+                
             }
         }
 
         if (lightSeams.Count >= lightSeamCountToPassLevel)
         {
-            Instantiate(cardHolder);
+            Instantiate(cardHolder,MainCanvas.transform);
             StageEnd.Raise(this,null);
+            this.enabled = false;
         }
     }
 

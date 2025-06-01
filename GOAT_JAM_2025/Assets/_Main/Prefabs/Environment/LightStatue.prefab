@@ -394,8 +394,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3a652bdafe0e84bba18e018c1b249c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardHolder: {fileID: 303652534228795079, guid: 0c00d297dc5450c4e9e3c2b397a6e723, type: 3}
+  MainCanvas: {fileID: 0}
+  StageEnd: {fileID: 11400000, guid: a0443e75fadfb8f48a4815d386be9308, type: 2}
   lightSeams: []
-  lightSeamCountToPassLevel: 3
+  lightSeamCountToPassLevel: 2
   interactionInfoPanel: {fileID: 4734413117027961137}
   isNowInteractable: 0
 --- !u!65 &365396343780088395
