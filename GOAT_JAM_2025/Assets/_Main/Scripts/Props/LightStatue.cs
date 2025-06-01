@@ -18,13 +18,9 @@ public class LightStatue : MonoBehaviour, IInteractable
     public bool isNowInteractable;
     private Player _player;
 
-    private float takeTime = 0.5f;
-    private float defaulttakeTime = 0.5f;
-
     private void Start()
     {
         _player = GeneralValuesHolder.Instance.Player;
-        defaulttakeTime = takeTime;
     }
 
     public void Interact()

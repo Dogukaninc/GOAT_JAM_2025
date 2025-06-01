@@ -4,23 +4,22 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    /// <summary>
-    /// Curretn level olacak bunun için bir event raise et sonra o evente bağlı olarak o level'ın kapısını aç
-    /// </summary>
     public List<Level> levels = new List<Level>();
-
     public Level currentLevel;
-
+    private int index = 0;
+    
     void Start()
     {
-        currentLevel = levels[0];
+        currentLevel = levels[index];
     }
 
     void Update()
     {
         if (currentLevel.isLevelFinished)
         {
-            currentLevel.onLevelEnd.Raise(this, null);
+            currentLevel.isLevelFinished = false;
+            index++;
+            currentLevel=levels[index];
         }
     }
 }

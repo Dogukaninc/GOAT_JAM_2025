@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3117201821328271927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -264,7 +264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5149797646619460341
 RectTransform:
   m_ObjectHideFlags: 0
@@ -493,11 +493,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialEmissionRate: 50
-  fadeDuration: 2
   destroyWhenEmpty: 1
   <isDamagable>k__BackingField: 0
+  darknessAmount: 30
+  initialDarknessAmount: 5
   darkSmokeParticle: {fileID: 7758423332425872224}
-  darknessAmount: 50
 --- !u!195 &4920321014700857212
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -12,11 +12,12 @@ namespace DefaultNamespace
         public ParticleSystem doorEffect;
         public bool isLevelFinished = false;
 
-        public void OpenDoorLock()
+        public void OpenDoorLock(Component sender,object args)
         {
             doorEffect.Play();
             doorLock.SetActive(false);
             StartCoroutine(LightSeq());
+            Debug.Log("IŞIKLARGELDİİİ");
         }
 
         public IEnumerator LightSeq()

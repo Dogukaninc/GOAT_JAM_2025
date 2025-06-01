@@ -1,8 +1,9 @@
 using NUnit.Framework;
 using System.Collections;
+using Scripts.Utilities;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : SingletonMonoBehaviour<EnemySpawner>
 {
     [SerializeField] private GameObject enemy;
     [SerializeField] private int[] numberOfEnemies;
@@ -17,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void onEnterNextStage()
     {
-        StartCoroutine(SpawnEnemy()); 
+        StartCoroutine(SpawnEnemy());
     }
     
     public void OnStageChange()//TODO: Yeni Levela geçerken çağır kapıda
@@ -38,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
             Destroy(x);
             Instantiate(enemy,spawnTarget.position,spawnTarget.rotation);
             spawnedEnemies++;
-            yield return new WaitForSeconds(Random.Range(1f,4f));
+            yield return new WaitForSeconds(Random.Range(4f,10f));
         }
     }
 }
