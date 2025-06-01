@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 4056135538505927440}
   - component: {fileID: 1140907049734560506}
   - component: {fileID: 6288362765167145517}
+  - component: {fileID: 1004252331964186642}
   m_Layer: 5
   m_Name: Baphomet
   m_TagString: Untagged
@@ -103,7 +104,7 @@ RectTransform:
   m_GameObject: {fileID: 1115771993521594736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.38661703, y: 0.24856214, z: 1}
+  m_LocalScale: {x: 0.58235204, y: 0.37440324, z: 1.5062762}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2000863124336456422}
@@ -136,7 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -166,6 +167,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speechBubble: {fileID: 1086279940044547731}
+--- !u!114 &1004252331964186642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115771993521594736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b384137bd1e450847adaa01ce79c4d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  events:
+  - {fileID: 11400000, guid: fb6b47fe24644b1429f46f9f77da3b49, type: 2}
+  responses:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6288362765167145517}
+        m_TargetAssemblyTypeName: Baphomet, Assembly-CSharp
+        m_MethodName: OnEnterNextStage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  - m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1761100218789609735
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,8 +232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 165, y: -0.000062943}
-  m_SizeDelta: {x: 1345.45, y: 772.689}
+  m_AnchoredPosition: {x: 314.1138, y: 0.000026703}
+  m_SizeDelta: {x: 1503.07, y: 811.609}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4181068503323739288
 CanvasRenderer:
@@ -240,8 +272,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class LightStatue : MonoBehaviour, IInteractable
 {
+    [SerializeField] private GameObject cardHolder;
+    [SerializeField] private GameEvent StageEnd;
     public List<GameObject> lightSeams;
     public int lightSeamCountToPassLevel;
     public GameObject interactionInfoPanel;
@@ -40,8 +42,9 @@ public class LightStatue : MonoBehaviour, IInteractable
                     seam.gameObject.SetActive(true);
                     seam.transform.DOJump(transform.position, 1, 1, 1).SetEase(Ease.InQuad).OnComplete(() =>
                     {
-                        // AddSeamToStatue(seam);
                         _player.LightSeams.Remove(seam);
+                        lightSeams.Add(seam);
+                        seam.SetActive(false);
                     });
 
                     Debug.Log("<color=red> Light Seam Taken From Player </color>");
@@ -51,7 +54,8 @@ public class LightStatue : MonoBehaviour, IInteractable
 
         if (lightSeams.Count >= lightSeamCountToPassLevel)
         {
-            Debug.Log("KAPIYI AÇÇÇÇ IŞIKLAR TOPLANDIII");
+            Instantiate(cardHolder);
+            StageEnd.Raise(this,null);
         }
     }
 
