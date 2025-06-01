@@ -53,6 +53,8 @@ public class Player : MonoBehaviour, IDieable
     private bool isLanternButtonHeld;
     private Vector3 moveDir;
 
+    [SerializeField] private GameEvent _playerDeadEvent;
+
     void Awake()
     {
         _playerAnimationHandler = GetComponent<PlayerAnimationHandler>();
@@ -199,6 +201,7 @@ public class Player : MonoBehaviour, IDieable
 
     public void OnDead()
     {
+        _playerDeadEvent.Raise(this, null);
     }
 
     public void OnRevive()
