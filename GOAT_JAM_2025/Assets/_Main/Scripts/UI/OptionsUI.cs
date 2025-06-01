@@ -48,6 +48,7 @@ public class OptionsUI : MonoBehaviour
     {
         _audioSlider.value = AudioListener.volume;
         _audioSlider.onValueChanged.AddListener(SetVolume);
+        _audioSlider.onValueChanged.AddListener((value) => Debug.Log($"Ses degisti: {value}"));
     }
 
     private void SetupReturnButton()
