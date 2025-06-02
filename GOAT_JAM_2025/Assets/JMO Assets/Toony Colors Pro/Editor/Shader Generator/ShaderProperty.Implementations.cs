@@ -46,6 +46,7 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("op")] public Operator @operator = Operator.Multiply;      //How this implementation is calculated compared to the previous one
 				[Serialization.SerializeAs("lbl"), ExcludeFromCopy] public string Label = "Property Label";
 				[Serialization.SerializeAs("gpu_inst")] public bool IsGpuInstanced = false;
+				[Serialization.SerializeAs("dots_inst")] public bool IsDotsInstanced = false;
 				[Serialization.SerializeAs("locked"), ExcludeFromCopy] public bool IsLocked = false;
 				[Serialization.SerializeAs("impl_index"), ExcludeFromCopy] public int DefaultImplementationIndex = -1; // if >= 0, then this is a default implementation
 
@@ -176,6 +177,7 @@ namespace ToonyColorsPro
 					this.@operator = from.@operator;
 					this.Label = from.Label;
 					this.IsGpuInstanced = from.IsGpuInstanced;
+					this.IsDotsInstanced = from.IsDotsInstanced;
 
 					var from_mp = from as Imp_MaterialProperty;
 					var this_mp = this as Imp_MaterialProperty;
@@ -392,6 +394,15 @@ namespace ToonyColorsPro
 									}
 								}
 							}
+
+							var imp_cc = imp as Imp_CustomCode;
+							if (imp_cc != null)
+							{
+								if (imp_cc.code.Contains(this.PropertyName) || imp_cc.prependCode.Contains(this.PropertyName))
+								{
+									CustomMaterialPropertyReferences += imp_cc.ParentShaderProperty.DisplayName + ", ";
+								}
+							}
 						}
 					}
 
@@ -505,9 +516,28 @@ namespace ToonyColorsPro
 					{
 						bool highlighted = !IsDefaultImplementation ? IsGpuInstanced : IsGpuInstanced != GetDefaultImplementation<Imp_MaterialProperty>().IsGpuInstanced;
 						SGUILayout.InlineLabel("GPU Instanced", "Tag this property as a possible variant for GPU instancing", highlighted);
+						EditorGUI.BeginChangeCheck();
 						IsGpuInstanced = SGUILayout.Toggle(IsGpuInstanced);
+						if (EditorGUI.EndChangeCheck())
+							if (IsDotsInstanced && IsGpuInstanced)
+								IsDotsInstanced = false;
 					}
 					EndHorizontal();
+
+					if (ShaderGenerator2.IsURP)
+					{
+						BeginHorizontal();
+						{
+							bool highlighted = !IsDefaultImplementation ? IsDotsInstanced : IsDotsInstanced != GetDefaultImplementation<Imp_MaterialProperty>().IsDotsInstanced;
+							SGUILayout.InlineLabel("DOTS Instanced", "Tag this property as a supporting DOTS instancing", highlighted);
+							EditorGUI.BeginChangeCheck();
+							IsDotsInstanced = SGUILayout.Toggle(IsDotsInstanced);
+							if (EditorGUI.EndChangeCheck())
+								if (IsDotsInstanced && IsGpuInstanced)
+									IsGpuInstanced = false;
+						}
+						EndHorizontal();
+					}
 
 					BeginHorizontal();
 					GUILayout.Space(2);
@@ -1011,7 +1041,7 @@ namespace ToonyColorsPro
 				bool InvalidSampler;
 				bool UseSeparateSampler { get { return SeparateSamplerName != null && CanUseSeparateSampler && !UseOldSampler2DSyntax; } }
 				bool UseOldSampler2DSyntax { get { return !ShaderGenerator2.IsURP && (NoTile || UvSource == UvSourceType.Triplanar); }}
-				bool CanUseSeparateSampler { get { return ShaderGenerator2.IsURP | !(NoTile || UvSource == UvSourceType.Triplanar); } }
+				bool CanUseSeparateSampler { get { return ShaderGenerator2.IsURP || !(NoTile || UvSource == UvSourceType.Triplanar); } }
 #else
 				bool InvalidSampler
 				{
@@ -1731,10 +1761,12 @@ namespace ToonyColorsPro
 
 					// function
 #if UNITY_2019_4_OR_NEWER
-					string function = NoTile ? "TCP2_TEX2D_SAMPLE_NOTILE" : "TCP2_TEX2D_SAMPLE";
-#else
-					string function = NoTile ? "tex2D_noTile" : "tex2D";
+					string function;
+					if (!UseOldSampler2DSyntax)
+						function = NoTile ? "TCP2_TEX2D_SAMPLE_NOTILE" : "TCP2_TEX2D_SAMPLE";
+					else
 #endif
+						function = NoTile ? "tex2D_noTile" : "tex2D";
 
 					// channels
 					var hideChannels = TryGetArgument("hide_channels", arguments);
@@ -1756,7 +1788,7 @@ namespace ToonyColorsPro
 							function = NoTile ? "TCP2_TEX2D_SAMPLE_TRIPLANAR_NOTILE" : "TCP2_TEX2D_SAMPLE_TRIPLANAR";
 						else
 #endif
-						function = NoTile ? "tex2D_triplanar_noTile" : "tex2D_triplanar";
+							function = NoTile ? "tex2D_triplanar_noTile" : "tex2D_triplanar";
 
 						bool useTilingOffset = UseTilingOffset && (!GlobalTilingOffset || UvSource != UvSourceType.Texcoord);
 						string texelScaling = ScaleByTexelSize ? string.Format(" * {0}_TexelSize.xy", PropertyName) : "";
@@ -1802,10 +1834,11 @@ namespace ToonyColorsPro
 					}
 
 #if UNITY_2019_4_OR_NEWER
-					return string.Format("{0}({1}, {2}, {3}{4}{5}{6}{7}{8}){9}", function, PropertyName, sampler, coords, tilingMod, scrollingMod, offsetMod, randomOffsetMod, uvSineMod, channels);
-#else
-					return string.Format("{0}({1}, {2}{3}{4}{5}{6}{7}){8}", function, PropertyName, coords, tilingMod, scrollingMod, offsetMod, randomOffsetMod, uvSineMod, channels);
+					if (!UseOldSampler2DSyntax)
+						return string.Format("{0}({1}, {2}, {3}{4}{5}{6}{7}{8}){9}", function, PropertyName, sampler, coords, tilingMod, scrollingMod, offsetMod, randomOffsetMod, uvSineMod, channels);
+					else
 #endif
+						return string.Format("{0}({1}, {2}{3}{4}{5}{6}{7}){8}", function, PropertyName, coords, tilingMod, scrollingMod, offsetMod, randomOffsetMod, uvSineMod, channels);
 				}
 				
 				internal override string PrintVariableVertex(string inputSource, string outputSource, string arguments)
@@ -2926,8 +2959,7 @@ namespace ToonyColorsPro
 
 				internal override string PrintVariableVertex(string inputSource, string outputSource, string arguments)
 				{
-					string coord = ShaderGenerator2.VariablesManager.GetVariable("texcoord" + TexcoordChannel);
-					return string.Format("{0}.{1}.xy", inputSource, string.IsNullOrEmpty(coord) ? "texcoord" + TexcoordChannel : coord);
+					return $"{inputSource}.{"texcoord" + TexcoordChannel}.{Channels.ToLowerInvariant()}";
 				}
 
 				internal override string PrintVariableFragment(string inputSource, string outputSource, string arguments)
@@ -2940,7 +2972,7 @@ namespace ToonyColorsPro
 					}
 					else
 					{
-						return string.Format("{0}.{1}.xy", inputSource, coord);
+						return $"{inputSource}.{coord}.{Channels.ToLowerInvariant()}";
 					}
 
 					//var hideChannels = TryGetArgument("hide_channels", arguments);
@@ -5707,6 +5739,18 @@ namespace ToonyColorsPro
 				/// <returns>null if the reference is allowed, an error message if not, an empty string if the reference should be hidden in the menus</returns>
 				public static string IsReferencePossible(ShaderProperty parent, ShaderProperty reference)
 				{
+					// Clones now copy the passBitmask, but for backward compatibility we need
+					// to retrieve the source of the clone and fetch its passBitmask directly
+					if (parent.isLayerClone)
+					{
+						string sourceName = parent.Name.Substring(0, parent.Name.LastIndexOf('_'));
+						var sourceSp = ShaderGenerator2.CurrentConfig.GetShaderPropertyByName(sourceName);
+						if (sourceSp != null)
+						{
+							parent.passBitmask = sourceSp.passBitmask;
+						}
+					}
+					
 					//can't reference (from) a hook
 					if (parent.isHook || reference.isHook)
 						return "";

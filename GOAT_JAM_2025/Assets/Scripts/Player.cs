@@ -98,7 +98,7 @@ public class Player : MonoBehaviour, IDieable
 
         if (groundPlane.Raycast(ray, out rayDistance))
         {
-            mouseTargetPos.position = ray.GetPoint(rayDistance);
+            // mouseTargetPos.position = ray.GetPoint(rayDistance);
             return ray.GetPoint(rayDistance);
         }
 

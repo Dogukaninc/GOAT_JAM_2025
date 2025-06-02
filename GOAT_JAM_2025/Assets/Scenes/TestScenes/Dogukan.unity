@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.16226411, g: 0.16226411, b: 0.16226411, a: 1}
   m_FogMode: 2
   m_FogDensity: 0.087
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.6075471, g: 0.6075471, b: 0.6075471, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ed1387202b1349540a5d6464f0f27488, type: 2}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 0.56
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 1659986618}
+  m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -94,7 +94,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 0988d03b4b4e3134995b7d979c41303e, type: 2}
+  m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5425,6 +5425,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 8766223094359547005, guid: e9c80748bcc7d7444bc5ea17cd1164d9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9107533419387443202, guid: e9c80748bcc7d7444bc5ea17cd1164d9, type: 3}
       propertyPath: m_Icon
       value: 
@@ -6464,6 +6468,11 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!4 &1441240170 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6435898819052977212, guid: 0a29b6368bffaeb49a3c16d3d472b5d2, type: 3}
+  m_PrefabInstance: {fileID: 1062018468039647551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1455850762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7464,8 +7473,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 0.27586326, g: 0.33156103, b: 0.4641509, a: 1}
-  m_Intensity: 4.09
+  m_Color: {r: 0.46156633, g: 0.66607624, b: 0.7132075, a: 1}
+  m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -10138,6 +10147,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6543960942398076276, guid: 0a29b6368bffaeb49a3c16d3d472b5d2, type: 3}
+      propertyPath: m_Data.m_ConstrainedObject
+      value: 
+      objectReference: {fileID: 1441240170}
     - target: {fileID: 6543960942398076276, guid: 0a29b6368bffaeb49a3c16d3d472b5d2, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
