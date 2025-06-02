@@ -1708,6 +1708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   lifespan: 4
+  isThrown: 0
 --- !u!54 &2013405620476632106
 Rigidbody:
   m_ObjectHideFlags: 0
